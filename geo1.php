@@ -7,6 +7,16 @@
     <title>Document</title>
 </head>
 <body>
+    <?php 
+        if (isset($_POST['submit'])){ 
+            header('Location: geo2.php');
+        }
+    ?> 
     <p>This is the first question of Geography</p>
+    <div class="next-container">
+    <form action='geo1.php' method='POST'>
+        <input type='submit' name='submit' value='Next Question' />
+    </form>
+    </div>
 </body>
 </html>

@@ -9,22 +9,22 @@
 <body>
     <?php 
         if (isset($_POST['submit'])){ 
-            header('Location: history3.php');
+            header('Location: geo5.php');
         }
         if (isset($_POST['back'])){ 
-            header('Location: history1.php');
+            header('Location: geo3.php');
         }
     ?> 
-    <p>This is the second question of History</p>
+    <p>This is the fourth question of Geography</p>
     <div class="back-container">
-        <form action='history2.php' method='POST'>
-            <input type='submit' name='back' value='Previous Question' />
-        </form>
+    <form action='geo4.php' method='POST'>
+        <input type='submit' name='back' value='Previous Question' />
+    </form>
     </div>
     <div class="next-container">
-        <form action='history2.php' method='POST'>
-            <input type='submit' name='submit' value='Next Question' />
-        </form>
+    <form action='geo4.php' method='POST'>
+        <input type='submit' name='submit' value='Next Question' />
+    </form>
     </div>
 </body>
 </html>
