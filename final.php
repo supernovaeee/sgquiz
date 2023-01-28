@@ -8,5 +8,6 @@
 </head>
 <body>
     <h1>Your Result</h1>
+    <p>Number of correct =</p>
 </body>
 </html>
