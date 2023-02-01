@@ -38,9 +38,10 @@
         echo "This is geography question";
         echo "<br>";
     }
-    // Close questions fiel
+    // Close questions file
     fclose($file);
     ?>
+    <br>
     <label>Please select the correct answer</label><br>
     <form method="post" action="game.php">
         <?php
