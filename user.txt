@@ -1,0 +1,5 @@
+Kevin,0,0
+Janet,0,0
+Azza Sekarnova,1,0
+Rachel,0,1
+meow,0,1

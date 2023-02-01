@@ -1,0 +1,12 @@
+1||1||How do you movie stars learn to act?||2||5||-3||1||Singing Practice||2||Continuous Practice||3||Lazing at Home
+2||1||What is the name of the main antagonist in Star Wars?||1||5||-3||1||Darth Sidious||2||ObiWan Kenobi||3||Chewbacca
+3||1||How many members are there in the Avengers?||2||5||-3||1||125||2||15||3||2048
+4||1||How many infinity stones are there?||1||5||-3||1||6||2||15||3||48
+5||1||How did black widow die?||1||5||-3||1||Sacrificed Herself||2||Car Accident||3||Thanos Snap
+6||1||What is the name of the actor that played Black Panther||3||5||-3||1||Morgan Freeman||2||Michael B. Jordan||3||Chadwick Boseman
+7||2||Who won the World Cup in 2022||1||5||-3||1||France||2||Singapore||3||Malaysia
+8||2||What was the World Record timing set by Husain Bolt?||2||5||-3||1||12.24||2||9.58||3||15.02
+9||2||Where will the next Olympics be held at?||3||5||-3||1||Changi Airport||2||Kota Kinabalu||3||Paris
+10||2||Who won the first gold medal for Singapore?||1||5||-3||1||Joseph Schooling||2||Dick Lee||3||Kurt Tay
+11||2||How many medals does Singapore have at the Olympics?||3||5||-3||1||12||2||48||3||5
+12||2||Which team is the 2022 NBA champions?||3||5||-3||1||Hougang FC||2||Singapore Slingers||3||Golden State Warriors

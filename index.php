@@ -1,21 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Singapore Quiz </title>
 </head>
-<body>
-<?php
-    if (isset($_POST['submit'])) {
 
+<body>
+    <?php
+    if (isset($_POST['submit'])) {
         $name = $_POST['name'];
         $trimName = trim($name);
-        if (empty($trimName)){
+        if (empty($trimName)) {
+            // display warning message if name is empty string
             $error = "Name cannot be blank";
             echo "<h4 style='color:red;'>$error</h4>";
         } else {
+            // initialise session variables
             session_start();
             $_SESSION['overallScore'] = 0;
             $_SESSION['name'] = $trimName;
@@ -24,17 +27,41 @@
             $_SESSION['wrong'] = 0;
             $_SESSION['correct'] = 0;
             $_SESSION['attempted'] = "";
-            if ($_POST['option']=='his'){
-                header('Location: history1.php');
+            // set historyAttempt and geoAttempt variables based on option input
+            // direct to game.php after submitting
+            if ($_POST['option'] == 'his') {
+                $_SESSION['historyAttempt'] = 1;
+                header('Location: game.php');
+            } else {
+                $_SESSION['geoAttempt'] = 1;
+                header('Location: game.php');
             }
-            else{
-                header('Location: geo1.php');
+            $name = $_SESSION['name'];
+            $historyAttempt = $_SESSION['historyAttempt'];
+            $geoAttempt = $_SESSION['geoAttempt'];
+            $txt = $name . "," . $historyAttempt . ","
+                . $geoAttempt;
+            if (
+                // if file exists and is readable, 
+                file_exists("user.txt") &&
+                ($handle = fopen("user.txt", "r")) == TRUE
+            ) {
+                // .. open file
+                // write the name into the text file, line by line
+                $myfile = fopen("user.txt", "a");
+                fwrite($myfile, $txt . PHP_EOL);
+            } else {
+                // else, throw an error message
+                die("unable to open file!");
             }
+            fclose($myfile);
         }
     }
-?>
+    ?>
     <form action='index.php' method='POST'>
-        <div><h1>Singapore General Knowledge Quiz</h1></div>
+        <div>
+            <h1>Singapore General Knowledge Quiz</h1>
+        </div>
         <div class="name-container">
             <input type="text" name="name" placeholder="Your Name*" required>
         </div>
@@ -49,7 +76,7 @@
             </div>
         </div>
         <div class="submit-container">
-            <input type='submit' name='submit' value='Enter the Game!' /> 
+            <input type='submit' name='submit' value='Enter the Game!' />
         </div>
         <div class="reset-container">
             <input type='reset' name='reset' value='Reset' />
@@ -57,4 +84,5 @@
     </form>
 
 </body>
+
 </html>

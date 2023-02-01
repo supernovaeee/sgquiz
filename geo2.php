@@ -12,7 +12,7 @@
             header('Location: geo3.php');
         }
         if (isset($_POST['back'])){ 
-            header('Location: geo11.php');
+            header('Location: geo1.php');
         }
     ?> 
     <p>This is the second question of Geography</p>
