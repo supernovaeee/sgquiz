@@ -24,24 +24,25 @@
         $questions[] = fgets($file);
     }
     // Output a random question based on option input (History / Geography)
+    // Split the random line taken from questions.txt by "," separator
+    // to output only the question 
     if ($_SESSION['historyAttempt'] == 1) {
         $randKey = rand(0, 9);
-        echo $questions[$randKey];
-        echo "<br>";
-        echo "This is history question";
-        echo "<br>";
+        $randLineArray = explode(",", $questions[$randKey]);
+        echo "<h2>This is History Game</h2>";
+        echo ($randLineArray[2]);
 
     } else {
         $randKey = rand(10, 19);
-        echo $questions[$randKey];
-        echo "<br>";
-        echo "This is geography question";
-        echo "<br>";
+        $randLineArray = explode(",", $questions[$randKey]);
+        echo "<h2>This is Geography Game</h2>";
+        echo ($randLineArray[2]);
     }
     // Close questions file
     fclose($file);
     ?>
-    <br>
+    <br><br>
+
     <label>Please select the correct answer</label><br>
     <form method="post" action="game.php">
         <?php

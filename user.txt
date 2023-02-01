@@ -24,3 +24,8 @@ erick,0,1
 erick,1,0
 erick,0,1
 erick,0,1
+erick,1,0
+erick,0,1
+erick,1,0
+erick,0,1
+erick,1,0

@@ -1,20 +1,20 @@
-Question 1, HIS
-Question 2, HIS
-Question 3, HIS
-Question 4, HIS
-Question 5, HIS
-Question 6, HIS
-Question 7, HIS
-Question 8, HIS
-Question 9, HIS
-Question 10, HIS
-Question 1, GEO
-Question 2, GEO
-Question 3, GEO
-Question 4, GEO
-Question 5, GEO
-Question 6, GEO
-Question 7, GEO
-Question 8, GEO
-Question 9, GEO
-Question 10, GEO
+1, HIS, What was Singapore originally known as?, Temasek
+2, HIS, When did Singapore become independent?, 9 August 1965
+3, HIS, The name Singapore was attributed to this 14th century Sumatran prince. What was his name?, Sang Nila Utama
+4, HIS, Which European is credited with the founding of modern Singapore in 1819?, Sir Stamford Raffles
+5, HIS, Who was the first president of the Republic of Singapore?, Yusof bin Ishak
+6, HIS, Who was Singapore's first Prime Minister?, Lee Kwan Yew
+7, HIS, Which battle saw the defeat of the British forces in Malaya and the subsequent surrender of Singapore to the Japanese?, The Battle of Singapore
+8, HIS, Singapore Island originally was inhabited by fishermen and pirates, and it served as an outpost for the Sumatran empire of__, Srivijaya
+9, HIS, What is the meaning of Singapura?, Lion City
+10, HIS, What was the treaty in 1824 that left Malaya and Singapore in the British sphere?, Anglo-Dutch Treaty
+1, GEO, Which country is to the north of Singapore?, Malaysia
+2, GEO, When is the monsoon season in Singapore?, From November to January
+3, GEO, What time zone does Singapore follow?, GMT +8
+4, GEO, How many islands make up the city state of Singapore?, 63
+5, GEO, What is Singapore's highest natural point?, Bukit Timah Hill
+6, GEO, How much forest did Singapore lose due to its urbanisation?, 95%
+7, GEO, What is Singapore's climate?, A tropical rainforest climate
+8, GEO, What is the average temperature in Singapore?, 25°C to 35 °C
+9, GEO, Where is Singapore located?, Southeast Asia
+10, GEO, What kind of terrain does Singapore have?, Lowlands with a central plateau
