@@ -1,5 +1,25 @@
-Kevin,0,0
-Janet,0,0
+carol,1,0
+jerry,1,0
+alicia,0,1
+Azza Sekarnova,0,1
+alicia,0,1
+awer,1,0
+ava,0,1
+asdf,0,1
+carol,0,1
 Azza Sekarnova,1,0
-Rachel,0,1
-meow,0,1
+Azza Sekarnova,1,0
+Azza Sekarnova,1,0
+erick,1,0
+erick,0,1
+erick,0,1
+erick,0,1
+erick,1,0
+erick,0,1
+erick,0,1
+erick,1,0
+erick,0,1
+erick,1,0
+erick,0,1
+erick,1,0
+erick,0,1

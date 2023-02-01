@@ -10,6 +10,10 @@
 
 <body>
     <?php
+    ini_set('display_errors', 1);
+    error_reporting(E_ALL ^ E_NOTICE);
+    session_start();
+    session_unset();
     if (isset($_POST['submit'])) {
         $name = $_POST['name'];
         $trimName = trim($name);
@@ -19,7 +23,6 @@
             echo "<h4 style='color:red;'>$error</h4>";
         } else {
             // initialise session variables
-            session_start();
             $_SESSION['overallScore'] = 0;
             $_SESSION['name'] = $trimName;
             $_SESSION['historyAttempt'] = 0;
@@ -55,6 +58,11 @@
                 die("unable to open file!");
             }
             fclose($myfile);
+            if ($_POST['option'] == 'his') {
+                header('Location: game.php');
+            } else {
+                header('Location: game.php');
+            }
         }
     }
     ?>
