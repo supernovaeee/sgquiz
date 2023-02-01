@@ -107,6 +107,8 @@
         }
         $correctAnsLive = trim($_SESSION['$correctAnsLive']);
         $correctAns = trim($_SESSION['$correctAns']);
+        echo $correctAnsLive;
+        echo "<br>";
         ?>
         <?php
         if (isset($_POST['forward'])) {
