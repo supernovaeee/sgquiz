@@ -13,6 +13,7 @@
     ini_set('display_errors', 1);
     error_reporting(E_ALL ^ E_NOTICE);
     session_start();
+    var_dump($_SESSION);
     ?>
     <?php
     // Open questions.txt file
@@ -67,26 +68,26 @@
         } else {
             // 4 types of questions layout: correct Answer can be at 1st, 2nd, 3rd, or 4th position
             $layout1 = '
-            <input type="radio" id="his" name="option" value="his">
-            <label for="his">' . $_SESSION['$correctAns'] . ' </label><br>' . '<input type="radio" id="his" name="option" value="his">
-            <label for="his">' . $_SESSION['$wrongAns1'] . ' </label><br>' . '<input type="radio" id="his" name="option" value="his">
-            <label for="his">' . $_SESSION['$wrongAns2'] . ' </label><br>' . '<input type="radio" id="his" name="option" value="his">
-            <label for="his">' . $_SESSION['$wrongAns3'] . ' </label><br>';
-            $layout2 = '<input type="radio" id="his" name="option" value="his">
-            <label for="his">' . $_SESSION['$wrongAns1'] . ' </label><br>' . '<input type="radio" id="his" name="option" value="his">
-            <label for="his">' . $_SESSION['$correctAns'] . ' </label><br>' . '<input type="radio" id="his" name="option" value="his">
-            <label for="his">' . $_SESSION['$wrongAns2'] . ' </label><br>' . '<input type="radio" id="his" name="option" value="his">
-            <label for="his">' . $_SESSION['$wrongAns3'] . ' </label><br>';
-            $layout3 = '<input type="radio" id="his" name="option" value="his">
-            <label for="his">' . $_SESSION['$wrongAns1'] . ' </label><br>' . '<input type="radio" id="his" name="option" value="his">
-            <label for="his">' . $_SESSION['$wrongAns2'] . ' </label><br>' . '<input type="radio" id="his" name="option" value="his">
-            <label for="his">' . $_SESSION['$correctAns'] . ' </label><br>' . '<input type="radio" id="his" name="option" value="his">
-            <label for="his">' . $_SESSION['$wrongAns3'] . ' </label><br>';
-            $layout4 = '<input type="radio" id="his" name="option" value="his">
-            <label for="his">' . $_SESSION['$wrongAns1'] . ' </label><br>' . '<input type="radio" id="his" name="option" value="his">
-            <label for="his">' . $_SESSION['$wrongAns2'] . ' </label><br>' . '<input type="radio" id="his" name="option" value="his">
-            <label for="his">' . $_SESSION['$wrongAns3'] . ' </label><br>' . '<input type="radio" id="his" name="option" value="his">
-            <label for="his">' . $_SESSION['$correctAns'] . ' </label><br>';
+            <input type="radio" id="correctAns" name="answer" value="correctAns">
+            <label for="correctAns">' . $_SESSION['$correctAns'] . ' </label><br>' . '<input type="radio" id="wrongAns1" name="answer" value="wrongAns1">
+            <label for="wrongAns1">' . $_SESSION['$wrongAns1'] . ' </label><br>' . '<input type="radio" id="wrongAns2" name="answer" value="wrongAns2">
+            <label for="wrongAns2">' . $_SESSION['$wrongAns2'] . ' </label><br>' . '<input type="radio" id="wrongAns3" name="answer" value="wrongAns3">
+            <label for="wrongAns3">' . $_SESSION['$wrongAns3'] . ' </label><br>';
+            $layout2 = '<input type="radio" id="wrongAns1" name="answer" value="wrongAns1">
+            <label for="wrongAns1">' . $_SESSION['$wrongAns1'] . ' </label><br>' . '<input type="radio" id="correctAns" name="answer" value="correctAns">
+            <label for="correctAns">' . $_SESSION['$correctAns'] . ' </label><br>' . '<input type="radio" id="wrongAns2" name="answer" value="wrongAns2">
+            <label for="wrongAns2">' . $_SESSION['$wrongAns2'] . ' </label><br>' . '<input type="radio" id="wrongAns3" name="answer" value="wrongAns3">
+            <label for="wrongAns3">' . $_SESSION['$wrongAns3'] . ' </label><br>';
+            $layout3 = '<input type="radio" id="wrongAns1" name="answer" value="wrongAns1">
+            <label for="wrongAns1">' . $_SESSION['$wrongAns1'] . ' </label><br>' . '<input type="radio" id="wrongAns2" name="answer" value="wrongAns2">
+            <label for="wrongAns2">' . $_SESSION['$wrongAns2'] . ' </label><br>' . '<input type="radio" id="correctAns" name="answer" value="correctAns">
+            <label for="correctAns">' . $_SESSION['$correctAns'] . ' </label><br>' . '<input type="radio" id="wrongAns3" name="answer" value="wrongAns3">
+            <label for="wrongAns3">' . $_SESSION['$wrongAns3'] . ' </label><br>';
+            $layout4 = '<input type="radio" id="wrongAns1" name="answer" value="wrongAns1">
+            <label for="wrongAns1">' . $_SESSION['$wrongAns1'] . ' </label><br>' . '<input type="radio" id="wrongAns2" name="answer" value="wrongAns2">
+            <label for="wrongAns2">' . $_SESSION['$wrongAns2'] . ' </label><br>' . '<input type="radio" id="wrongAns3" name="answer" value="wrongAns3">
+            <label for="wrongAns3">' . $_SESSION['$wrongAns3'] . ' </label><br>' . '<input type="radio" id="correctAns" name="answer" value="correctAns">
+            <label for="correctAns">' . $_SESSION['$correctAns'] . ' </label><br>';
             // Randomise the question layout
             $randKey2 = rand(1, 4);
             switch ($randKey2) {
@@ -103,8 +104,25 @@
                     echo $layout4;
             }
         }
+        $correctAnsEssay = trim($_SESSION['$correctAns']);
+        echo $correctAnsEssay;
+        echo "<br>";
         ?>
-        <input type='submit' name='back' value='Previous Question' />
+        <?php
+        if (isset($_POST['forward'])) {
+            echo $_POST['answer'];
+            $userAns = trim($_POST['answer']);
+            if ($userAns == 'correctAns' || $userAns == $correctAnsEssay) {
+                echo "You are correct";
+                echo "<br>";
+            } else {
+                echo "You are wrong";
+                echo "<br>";
+            }
+        }
+        // var_dump($_SESSION);
+        ?>
+        <!-- <input type='submit' name='back' value='Previous Question' /> -->
         <input type='submit' name='forward' value='Next Question' />
     </form>
 </body>

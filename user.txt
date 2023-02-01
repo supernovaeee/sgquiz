@@ -29,3 +29,6 @@ erick,0,1
 erick,1,0
 erick,0,1
 erick,1,0
+Azza Sekarnova,0,1
+Azza Sekarnova,1,0
+Azza Sekarnova,1,0
