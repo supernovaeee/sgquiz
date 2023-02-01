@@ -31,22 +31,81 @@
         $randLineArray = explode(",", $questions[$randKey]);
         echo "<h2>This is History Game</h2>";
         echo ($randLineArray[2]);
-
     } else {
         $randKey = rand(10, 19);
         $randLineArray = explode(",", $questions[$randKey]);
         echo "<h2>This is Geography Game</h2>";
         echo ($randLineArray[2]);
     }
+    // Set session variables to store the randomly generated values into global variables
+    $_SESSION['$question_ID'] = $randLineArray[0];
+    $_SESSION['question'] = $randLineArray[2];
+    $_SESSION['$correctAns'] = $randLineArray[3];
+    $_SESSION['$wrongAns1'] = $randLineArray[4];
+    $_SESSION['$wrongAns2'] = $randLineArray[5];
+    $_SESSION['$wrongAns3'] = $randLineArray[6];
     // Close questions file
     fclose($file);
+    ?>
+    <?php
+    // if (isset($_POST['back'])) {
+    //     header('Location: history5.php');
+    // }
+    // if (isset($_POST['back'])) {
+    //     header('Location: history3.php');
+    // }
     ?>
     <br><br>
 
     <label>Please select the correct answer</label><br>
     <form method="post" action="game.php">
         <?php
+        // Randomise whether the answer is MCQ or short text input
+        $randKey = rand(0, 1);
+        if ($randKey == 1) {
+            echo '<input type="text" name="answer">';
+        } else {
+            // 4 types of questions layout: correct Answer can be at 1st, 2nd, 3rd, or 4th position
+            $layout1 = '
+            <input type="radio" id="his" name="option" value="his">
+            <label for="his">' . $_SESSION['$correctAns'] . ' </label><br>' . '<input type="radio" id="his" name="option" value="his">
+            <label for="his">' . $_SESSION['$wrongAns1'] . ' </label><br>' . '<input type="radio" id="his" name="option" value="his">
+            <label for="his">' . $_SESSION['$wrongAns2'] . ' </label><br>' . '<input type="radio" id="his" name="option" value="his">
+            <label for="his">' . $_SESSION['$wrongAns3'] . ' </label><br>';
+            $layout2 = '<input type="radio" id="his" name="option" value="his">
+            <label for="his">' . $_SESSION['$wrongAns1'] . ' </label><br>' . '<input type="radio" id="his" name="option" value="his">
+            <label for="his">' . $_SESSION['$correctAns'] . ' </label><br>' . '<input type="radio" id="his" name="option" value="his">
+            <label for="his">' . $_SESSION['$wrongAns2'] . ' </label><br>' . '<input type="radio" id="his" name="option" value="his">
+            <label for="his">' . $_SESSION['$wrongAns3'] . ' </label><br>';
+            $layout3 = '<input type="radio" id="his" name="option" value="his">
+            <label for="his">' . $_SESSION['$wrongAns1'] . ' </label><br>' . '<input type="radio" id="his" name="option" value="his">
+            <label for="his">' . $_SESSION['$wrongAns2'] . ' </label><br>' . '<input type="radio" id="his" name="option" value="his">
+            <label for="his">' . $_SESSION['$correctAns'] . ' </label><br>' . '<input type="radio" id="his" name="option" value="his">
+            <label for="his">' . $_SESSION['$wrongAns3'] . ' </label><br>';
+            $layout4 = '<input type="radio" id="his" name="option" value="his">
+            <label for="his">' . $_SESSION['$wrongAns1'] . ' </label><br>' . '<input type="radio" id="his" name="option" value="his">
+            <label for="his">' . $_SESSION['$wrongAns2'] . ' </label><br>' . '<input type="radio" id="his" name="option" value="his">
+            <label for="his">' . $_SESSION['$wrongAns3'] . ' </label><br>' . '<input type="radio" id="his" name="option" value="his">
+            <label for="his">' . $_SESSION['$correctAns'] . ' </label><br>';
+            // Randomise the question layout
+            $randKey2 = rand(1, 4);
+            switch ($randKey2) {
+                case 1:
+                    echo $layout1;
+                    break;
+                case 2:
+                    echo $layout2;
+                    break;
+                case 3:
+                    echo $layout3;
+                    break;
+                default:
+                    echo $layout4;
+            }
+        }
         ?>
+        <input type='submit' name='back' value='Previous Question' />
+        <input type='submit' name='forward' value='Next Question' />
     </form>
 </body>
 

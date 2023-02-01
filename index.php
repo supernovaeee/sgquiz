@@ -66,6 +66,7 @@
         }
     }
     ?>
+
     <form action='index.php' method='POST'>
         <div>
             <h1>Singapore General Knowledge Quiz</h1>

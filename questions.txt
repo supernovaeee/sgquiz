@@ -1,20 +1,20 @@
-1, HIS, What was Singapore originally known as?, Temasek
-2, HIS, When did Singapore become independent?, 9 August 1965
-3, HIS, The name Singapore was attributed to this 14th century Sumatran prince. What was his name?, Sang Nila Utama
-4, HIS, Which European is credited with the founding of modern Singapore in 1819?, Sir Stamford Raffles
-5, HIS, Who was the first president of the Republic of Singapore?, Yusof bin Ishak
-6, HIS, Who was Singapore's first Prime Minister?, Lee Kwan Yew
-7, HIS, Which battle saw the defeat of the British forces in Malaya and the subsequent surrender of Singapore to the Japanese?, The Battle of Singapore
-8, HIS, Singapore Island originally was inhabited by fishermen and pirates, and it served as an outpost for the Sumatran empire of__, Srivijaya
-9, HIS, What is the meaning of Singapura?, Lion City
-10, HIS, What was the treaty in 1824 that left Malaya and Singapore in the British sphere?, Anglo-Dutch Treaty
-1, GEO, Which country is to the north of Singapore?, Malaysia
-2, GEO, When is the monsoon season in Singapore?, From November to January
-3, GEO, What time zone does Singapore follow?, GMT +8
-4, GEO, How many islands make up the city state of Singapore?, 63
-5, GEO, What is Singapore's highest natural point?, Bukit Timah Hill
-6, GEO, How much forest did Singapore lose due to its urbanisation?, 95%
-7, GEO, What is Singapore's climate?, A tropical rainforest climate
-8, GEO, What is the average temperature in Singapore?, 25°C to 35 °C
-9, GEO, Where is Singapore located?, Southeast Asia
-10, GEO, What kind of terrain does Singapore have?, Lowlands with a central plateau
+1, HIS, What was Singapore originally known as?, Temasek, Sriwijaya, Palembang, Malaya
+2, HIS, When did Singapore become independent?, 9 August 1965, 18 September 1965, 9 August 1955, 18 September 1965
+3, HIS, The name Singapore was attributed to this 14th century Sumatran prince. What was his name?, Sang Nila Utama, Sri Sultan Wijaya, Balaputra, Samaratungga
+4, HIS, Which European is credited with the founding of modern Singapore in 1819?, Sir Stamford Raffles, Jan Willem Janssens, Herman Willem Daendels, John Crawfurd
+5, HIS, Who was the first president of the Republic of Singapore?, Yusof bin Ishak, Lee Kwan Yew, Sultan Hussein Shah, S. Rajaratnam
+6, HIS, Who was Singapore's first Prime Minister?, Lee Kwan Yew, Yusof bin Ishak, Sultan Hussein Shah, S. Rajaratnam
+7, HIS, Which battle saw the defeat of the British forces in Malaya and the subsequent surrender of Singapore to the Japanese?, The Battle of Singapore, The Battle of Malaya, Anglo-Nippon Battle, Malacca Strait Battle
+8, HIS, Singapore Island originally was inhabited by fishermen and pirates and it served as an outpost for the Sumatran empire of__, Srivijaya, Majapahit, Wijayapura, Malayu Dharmasraya
+9, HIS, What is the literal meaning of Singapura?, Lion Kingdom, Lion Mermaid, Mermaid City, Lion Island
+10, HIS, What was the treaty in 1824 that left Malaya and Singapore in the British sphere?, Anglo-Dutch Treaty, England-Dutch Treaty, English-Dutch Treaty, England-Netherlands Treaty
+1, GEO, Which country is the nearest to the north of Singapore?, Malaysia, Indonesia, Taiwan, Philippines
+2, GEO, When is the monsoon season in Singapore?, From November to January, From August to December, From October to February, From July to September
+3, GEO, What time zone does Singapore follow?, GMT +8, GMT+9, GMT+7, GMT+10
+4, GEO, How many islands make up the city state of Singapore?, 63, 60, 37, 45
+5, GEO, What is Singapore's highest natural point?, Bukit Timah Hill, Bukit Batok Hill, Telok Blangah Hill, Fort Canning Hill 
+6, GEO, How much forest did Singapore lose due to its urbanisation?, 95%, 83%, 75%, 89%
+7, GEO, What is Singapore's climate?, A tropical rainforest climate, Persistent hot climate, A subtropical climate, A two-season climate
+8, GEO, What is the average temperature in Singapore?, 25°C to 35 °C, 30°C to 35 °C, 20°C to 25 °C, 15°C to 35 °C,
+9, GEO, Where is Singapore located?, Southeast Asia, South Asia, East Asia, Australia
+10, GEO, What kind of terrain does Singapore have?, Lowlands with a central plateau, Highlands with a central plateau, Lowlands with surrounding plateau, Highlands with surrounding plateau
