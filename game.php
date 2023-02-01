@@ -105,14 +105,38 @@
             }
         }
         $correctAnsEssay = trim($_SESSION['$correctAns']);
-        echo $correctAnsEssay;
+        echo "Correct Ans from SESSION:" . $correctAnsEssay;
         echo "<br>";
+        echo "Type: " . gettype($correctAnsEssay);
+        echo "<br>";
+
         ?>
         <?php
         if (isset($_POST['forward'])) {
-            echo $_POST['answer'];
             $userAns = trim($_POST['answer']);
-            if ($userAns == 'correctAns' || $userAns == $correctAnsEssay) {
+            echo "Your previous answer: " . $userAns;
+            echo "<br>";
+            echo "Type: " . gettype($userAns);
+            echo "<br>";
+            $userAnsEqualTocorrectAnsEssay = $userAns == $correctAnsEssay;
+            echo "Is boolean?" . is_bool($userAnsEqualTocorrectAnsEssay);
+            echo "<br>";
+            echo "Is userAns equal to correctAnsEssay?";
+            switch ($userAnsEqualTocorrectAnsEssay) {
+                case true:
+                    echo 'True';
+                    break;
+                case false:
+                    echo 'False';
+                    break;
+                case null:
+                    echo 'Null';
+                    break;
+                default:
+                    echo 'Unknown';
+            }
+            echo "<br>";
+            if ($userAns == 'correctAns' || $userAnsEqualTocorrectAnsEssay) {
                 echo "You are correct";
                 echo "<br>";
             } else {
