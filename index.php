@@ -6,12 +6,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Singapore Quiz </title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
     <?php
-    ini_set('display_errors', 1);
-    error_reporting(E_ALL ^ E_NOTICE);
+    // ini_set('display_errors', 1);
+    // error_reporting(E_ALL ^ E_NOTICE);
     session_start();
     session_unset();
     if (isset($_POST['submit'])) {
@@ -70,30 +71,44 @@
     }
     ?>
 
-    <form action='index.php' method='POST'>
-        <div>
-            <h1>Singapore General Knowledge Quiz</h1>
-        </div>
-        <div class="name-container">
-            <input type="text" name="name" placeholder="Your Name*" required>
-        </div>
-        <div class="radio-container">
-            <div class="history-container">
-                <input type="radio" id="his" name="option" value="his" required>
-                <label for="his"> Singapore History</label><br>
+
+    <div class="titleContainer">
+        <h1>Singapore General Knowledge Quiz</h1>
+    </div>
+    <div class="pageContainer">
+        <div class="column">
+            <div class="head">
+                <h1 class="title"> Enter your name to start — Pick the category — Click "Play"!</h1><br>
+                <img class="logo"
+                    src="https://cdn3.iconfinder.com/data/icons/world-landmark-vol-2/512/03-merlion-statue-landmark-singapore-512.png"
+                    alt="alt">
             </div>
-            <div class="geo-container">
-                <input type="radio" id="geo" name="option" value="geo" required>
-                <label for="geo">Singapore Geography</label><br>
-            </div>
+            <form action='index.php' method='POST'>
+                <div class="nameContainer">
+                    <input class="name" type="text" name="name" placeholder="Your Name*" required>
+                </div>
+                <div class="radioContainer">
+                    <div class="radioItem historyContainer">
+                        <input type="radio" id="his" name="option" value="his" required>
+                        <label for="his"> Singapore History</label><br>
+                    </div>
+                    <div class="radioItem geoContainer">
+                        <input type="radio" id="geo" name="option" value="geo" required>
+                        <label for="geo">Singapore Geography</label><br>
+                    </div>
+                </div>
+                <div class="submitResetContainer">
+                    <div class="submitResetItem resetContainer">
+                        <button type='reset' name='reset' value='Reset'>Reset</button>
+                    </div>
+                    <div class="submitResetItem submitContainer">
+                        <button type='submit' name='submit' value='Enter the Game!'>Play!</button>
+                    </div>
+
+                </div>
+            </form>
         </div>
-        <div class="submit-container">
-            <input type='submit' name='submit' value='Enter the Game!' />
-        </div>
-        <div class="reset-container">
-            <input type='reset' name='reset' value='Reset' />
-        </div>
-    </form>
+    </div>
 
 </body>
 

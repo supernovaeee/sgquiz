@@ -1,8 +1,6 @@
-erick,geo
-erick,his
-erick,geo
-erick,geo
-erick,geo
-Kevin,geo
-erick,geo
 Azza Sekarnova,geo
+Azza Sekarnova,his
+Azza Sekarnova,his
+erick,his
+Azza Sekarnova,his
+Kevin,geo
