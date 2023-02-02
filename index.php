@@ -25,27 +25,28 @@
             // initialise session variables
             $_SESSION['overallScore'] = 0;
             $_SESSION['name'] = $trimName;
-            $_SESSION['historyAttempt'] = 0;
-            $_SESSION['geoAttempt'] = 0;
             $_SESSION['wrong'] = 0;
             $_SESSION['correct'] = 0;
             $_SESSION['correct_wrong_array'] = array();
             $_SESSION['qnsAttempted'] = 0;
-            $_SESSION['used_questionID'] = array();
+            $_SESSION['questionHistory'] = array();
+            $_SESSION['answerHistory'] = array();
+            $_SESSION['modeHistory'] = array();
+            $_SESSION['historyIndex'] = 0; // 0-based.
+            $_SESSION['gameType'] = '';
+            $_SESSION['randKeyArray'] = range(0, 19);
             // set historyAttempt and geoAttempt variables based on option input
             // direct to game.php after submitting
             if ($_POST['option'] == 'his') {
-                $_SESSION['historyAttempt'] = 1;
+                $_SESSION['gameType'] = 'his';
                 header('Location: game.php');
             } else {
-                $_SESSION['geoAttempt'] = 1;
+                $_SESSION['gameType'] = 'geo';
                 header('Location: game.php');
             }
             $name = $_SESSION['name'];
-            $historyAttempt = $_SESSION['historyAttempt'];
-            $geoAttempt = $_SESSION['geoAttempt'];
-            $txt = $name . "," . $historyAttempt . ","
-                . $geoAttempt;
+            $gameType = $_SESSION['gameType'];
+            $txt = $name . "," . $gameType;
             if (
                 // if file exists and is readable, 
                 file_exists("user.txt") &&

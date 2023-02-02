@@ -10,17 +10,14 @@
 
 <body>
     <?php
-    // ini_set('display_errors', 1);
-    // error_reporting(E_ALL ^ E_NOTICE);
+    ini_set('display_errors', 1);
+    error_reporting(E_ALL ^ E_NOTICE);
     session_start();
+    // print_r($_SESSION['randKeyArray']);
+    
+
     // variables to store session variables Live in previous question
-    $_SESSION['question'] = $_SESSION['questionLive'];
-    $_SESSION['questionID'] = $_SESSION['questionIDLive'];
     $_SESSION['correctAns'] = $_SESSION['correctAnsLive'];
-    $_SESSION['wrongAns1'] = $_SESSION['wrongAns1Live'];
-    $_SESSION['wrongAns2'] = $_SESSION['wrongAns2Live'];
-    $_SESSION['wrongAns3'] = $_SESSION['wrongAns3Live'];
-    print_r($_SESSION);
     ?>
     <?php
     // Open questions.txt file
@@ -31,45 +28,97 @@
     while (!feof($file)) {
         $questions[] = fgets($file);
     }
-    // Output a random question based on option input (History / Geography)
-    // Split the random line taken from questions.txt by "," separator
-    // to output only the question 
-    if ($_SESSION['historyAttempt'] == 1) {
-        $randKey = rand(0, 9);
-        $randLineArray = explode(",", $questions[$randKey]);
-        if (in_array($randLineArray[0], $_SESSION['used_questionID'])) {
-            $randKey = rand(0, 9);
-            $randLineArray = explode(",", $questions[$randKey]);
+
+    // Function to generate random key to later pick a question from text file
+    function randomKey($gameType)
+    {
+        if ($gameType == 'history') {
+            $n = sizeof($_SESSION['randKeyArray']) - 10; //subtract number of geog questions
+            $randPointer = rand(0, $n - 1); // return any integer from 0-9 => question number 1-10
+            $randKey = $_SESSION['randKeyArray'][$randPointer];
+            array_splice($_SESSION['randKeyArray'], $randPointer, 1);
+        } else {
+            $n = sizeof($_SESSION['randKeyArray']) - 10; //subtract number of his questions
+            $randPointer = rand(10, 9 + $n); // return any integer from 10-19 => question number 11-20
+            $randKey = $_SESSION['randKeyArray'][$randPointer];
+            array_splice($_SESSION['randKeyArray'], $randPointer, 1);
         }
-        echo "<h2>This is History Game</h2>";
-    } else {
-        echo "<br>";
-        $randKey = rand(10, 19);
-        // echo "Random key generated:" . $randKey . "<br>";
-        $randLineArray = explode(",", $questions[$randKey]);
-        // If question is already used (exists in used_questionID), regenerate random question
-        if (in_array($randLineArray[0], $_SESSION['used_questionID'])) {
-            $randKey = rand(10, 19);
-            $randLineArray = explode(",", $questions[$randKey]);
-        }
-        echo "<h2>This is Geography Game</h2>";
+        return $randKey; // question number = randKey + 1
+    }
+    function randomMode()
+    {
+        $rand = rand(0, 4);
+        return $rand;
+    }
+    function parseQuestion($questionKey)
+    {
+        global $questions;
+        $randLineArray = explode(",", $questions[$questionKey]);
+        // Set session variables to store the randomly generated values into global variables
+        $_SESSION['questionIDLive'] = $randLineArray[0];
+        $_SESSION['questionLive'] = $randLineArray[2];
+        $_SESSION['correctAnsLive'] = $randLineArray[3];
+        $_SESSION['wrongAns1Live'] = $randLineArray[4];
+        $_SESSION['wrongAns2Live'] = $randLineArray[5];
+        $_SESSION['wrongAns3Live'] = $randLineArray[6];
 
     }
-    // Set session variables to store the randomly generated values into global variables
-    $_SESSION['questionIDLive'] = $randLineArray[0];
-    array_push($_SESSION['used_questionID'], $_SESSION['questionIDLive']);
-    // 
-    $_SESSION['questionLive'] = $randLineArray[2];
-    $_SESSION['correctAnsLive'] = $randLineArray[3];
-    $_SESSION['wrongAns1Live'] = $randLineArray[4];
-    $_SESSION['wrongAns2Live'] = $randLineArray[5];
-    $_SESSION['wrongAns3Live'] = $randLineArray[6];
+    if (isset($_POST['back'])) {
+        $_SESSION['historyIndex']--;
+        if ($_SESSION['historyIndex'] < 0) { // if user press backwards from the first question, go back to homepage and reset
+            header('Location: index.php');
+        } else { // if user press backwards from any question, will get the key from question history
+            // get key for question and mode
+            $key = $_SESSION['questionHistory'][$_SESSION['historyIndex']];
+            $mode = $_SESSION['modeHistory'][$_SESSION['historyIndex']];
+            // parse and display
+            parseQuestion($key);
+        }
+
+    } else {
+        if (isset($_POST['forward'])) {
+            $_SESSION['historyIndex']++;
+        }
+        if ($_SESSION['historyIndex'] == sizeof($_SESSION['questionHistory'])) { // if the pointer is beyond the current array (user will attempt a new question), will randomise
+            // get a random key for question and mode
+            $randKey = randomKey($_SESSION['gameType']);
+            $mode = randomMode();
+            // parse and display
+            parseQuestion($randKey);
+            // Store the question history and the mode history
+            array_push($_SESSION['questionHistory'], $randKey);
+            array_push($_SESSION['modeHistory'], $mode);
+
+        } else { // if the pointer is not beyond the current array (after backwards, user will go to question that is already attempted), will get the key from question history 
+            // get key for question and mode
+            $key = $_SESSION['questionHistory'][$_SESSION['historyIndex']];
+            $mode = $_SESSION['modeHistory'][$_SESSION['historyIndex']];
+            // parse and display
+            parseQuestion($key);
+        }
+    }
+
+    // Display header
+    if ($_SESSION['gameType'] == 'history') {
+        echo "<h2>This is History Game</h2>"; // display header for history game
+    } else {
+        echo "<h2>This is Geography Game</h2>"; // display header for geography game
+    }
+
+    // Display question
     echo ($_SESSION['questionLive']);
+    // Display user's previous answer if he/she has already attempted.
+    if (sizeof($_SESSION['answerHistory']) > $_SESSION['historyIndex']) {
+        if ($mode == 0)
+            echo '<br>Your previous answer was : ' . $_SESSION['answerHistory'][$_SESSION['historyIndex']];
+        else {
+            $rawRadioValue = $_SESSION['answerHistory'][$_SESSION['historyIndex']];
+            $multipleChoice = explode(',', $rawRadioValue);
+            echo '<br>Your previous answer was : ' . $multipleChoice[1];
+        }
+    }
     echo '<br>';
     echo '<br>';
-    print_r($_SESSION['used_questionID']);
-    // print_r($_SESSION['displayBundle']);
-    
 
     // Close questions file
     fclose($file);
@@ -79,36 +128,34 @@
     <label>Please select the correct answer</label><br>
     <form method="post" action="game.php">
         <?php
-        // Randomise whether the answer is MCQ or short text input
-        $randKey = rand(0, 1);
-        if ($randKey == 1) {
+        // Display whether the answer is MCQ or short text input (based on randomise function result)
+        if ($mode == 0) {
             echo '<input type="text" name="answer">';
         } else {
             // 4 types of questions layout: correct Answer can be at 1st, 2nd, 3rd, or 4th position
             $layout1 = '
-            <input type="radio" id="correctAnsLive" name="answer" value="correctAnsLive">
-            <label for="correctAnsLive">' . $_SESSION['correctAnsLive'] . ' </label><br>' . '<input type="radio" id="wrongAns1Live" name="answer" value="wrongAns1Live">
-            <label for="wrongAns1Live">' . $_SESSION['wrongAns1Live'] . ' </label><br>' . '<input type="radio" id="wrongAns2Live" name="answer" value="wrongAns2Live">
-            <label for="wrongAns2Live">' . $_SESSION['wrongAns2Live'] . ' </label><br>' . '<input type="radio" id="wrongAns3Live" name="answer" value="wrongAns3Live">
-            <label for="wrongAns3Live">' . $_SESSION['wrongAns3Live'] . ' </label><br>';
-            $layout2 = '<input type="radio" id="wrongAns1Live" name="answer" value="wrongAns1Live">
-            <label for="wrongAns1Live">' . $_SESSION['wrongAns1Live'] . ' </label><br>' . '<input type="radio" id="correctAnsLive" name="answer" value="correctAnsLive">
-            <label for="correctAnsLive">' . $_SESSION['correctAnsLive'] . ' </label><br>' . '<input type="radio" id="wrongAns2Live" name="answer" value="wrongAns2Live">
-            <label for="wrongAns2Live">' . $_SESSION['wrongAns2Live'] . ' </label><br>' . '<input type="radio" id="wrongAns3Live" name="answer" value="wrongAns3Live">
-            <label for="wrongAns3Live">' . $_SESSION['wrongAns3Live'] . ' </label><br>';
-            $layout3 = '<input type="radio" id="wrongAns1Live" name="answer" value="wrongAns1Live">
-            <label for="wrongAns1Live">' . $_SESSION['wrongAns1Live'] . ' </label><br>' . '<input type="radio" id="wrongAns2Live" name="answer" value="wrongAns2Live">
-            <label for="wrongAns2Live">' . $_SESSION['wrongAns2Live'] . ' </label><br>' . '<input type="radio" id="correctAnsLive" name="answer" value="correctAnsLive">
-            <label for="correctAnsLive">' . $_SESSION['correctAnsLive'] . ' </label><br>' . '<input type="radio" id="wrongAns3Live" name="answer" value="wrongAns3Live">
-            <label for="wrongAns3Live">' . $_SESSION['wrongAns3Live'] . ' </label><br>';
-            $layout4 = '<input type="radio" id="wrongAns1Live" name="answer" value="wrongAns1Live">
-            <label for="wrongAns1Live">' . $_SESSION['wrongAns1Live'] . ' </label><br>' . '<input type="radio" id="wrongAns2Live" name="answer" value="wrongAns2Live">
-            <label for="wrongAns2Live">' . $_SESSION['wrongAns2Live'] . ' </label><br>' . '<input type="radio" id="wrongAns3Live" name="answer" value="wrongAns3Live">
-            <label for="wrongAns3Live">' . $_SESSION['wrongAns3Live'] . ' </label><br>' . '<input type="radio" id="correctAnsLive" name="answer" value="correctAnsLive">
-            <label for="correctAnsLive">' . $_SESSION['correctAnsLive'] . ' </label><br>';
-            // Randomise the question layout
-            $randKey2 = rand(1, 4);
-            switch ($randKey2) {
+            <input type="radio" id="correctAnsLive" name="answer" value="correctAnsLive,A">
+            <label for="correctAnsLive">' . "A. " . $_SESSION['correctAnsLive'] . ' </label><br>' . '<input type="radio" id="wrongAns1Live" name="answer" value="wrongAns1Live,B">
+            <label for="wrongAns1Live">' . "B. " . $_SESSION['wrongAns1Live'] . ' </label><br>' . '<input type="radio" id="wrongAns2Live" name="answer" value="wrongAns2Live,C">
+            <label for="wrongAns2Live">' . "C. " . $_SESSION['wrongAns2Live'] . ' </label><br>' . '<input type="radio" id="wrongAns3Live" name="answer" value="wrongAns3Live,D">
+            <label for="wrongAns3Live">' . "D. " . $_SESSION['wrongAns3Live'] . ' </label><br>';
+            $layout2 = '<input type="radio" id="wrongAns1Live" name="answer" value="wrongAns1Live",A>
+            <label for="wrongAns1Live">' . "A. " . $_SESSION['wrongAns1Live'] . ' </label><br>' . '<input type="radio" id="correctAnsLive" name="answer" value="correctAnsLive,B">
+            <label for="correctAnsLive">' . "B. " . $_SESSION['correctAnsLive'] . ' </label><br>' . '<input type="radio" id="wrongAns2Live" name="answer" value="wrongAns2Live,C">
+            <label for="wrongAns2Live">' . "C. " . $_SESSION['wrongAns2Live'] . ' </label><br>' . '<input type="radio" id="wrongAns3Live" name="answer" value="wrongAns3Live,D">
+            <label for="wrongAns3Live">' . "D. " . $_SESSION['wrongAns3Live'] . ' </label><br>';
+            $layout3 = '<input type="radio" id="wrongAns1Live" name="answer" value="wrongAns1Live,A">
+            <label for="wrongAns1Live">' . "A. " . $_SESSION['wrongAns1Live'] . ' </label><br>' . '<input type="radio" id="wrongAns2Live" name="answer" value="wrongAns2Live,B">
+            <label for="wrongAns2Live">' . "B. " . $_SESSION['wrongAns2Live'] . ' </label><br>' . '<input type="radio" id="correctAnsLive" name="answer" value="correctAnsLive,C">
+            <label for="correctAnsLive">' . "C. " . $_SESSION['correctAnsLive'] . ' </label><br>' . '<input type="radio" id="wrongAns3Live" name="answer" value="wrongAns3Live,D">
+            <label for="wrongAns3Live">' . "D. " . $_SESSION['wrongAns3Live'] . ' </label><br>';
+            $layout4 = '<input type="radio" id="wrongAns1Live" name="answer" value="wrongAns1Live,A">
+            <label for="wrongAns1Live">' . "A. " . $_SESSION['wrongAns1Live'] . ' </label><br>' . '<input type="radio" id="wrongAns2Live" name="answer" value="wrongAns2Live,B">
+            <label for="wrongAns2Live">' . "B. " . $_SESSION['wrongAns2Live'] . ' </label><br>' . '<input type="radio" id="wrongAns3Live" name="answer" value="wrongAns3Live,C">
+            <label for="wrongAns3Live">' . "C. " . $_SESSION['wrongAns3Live'] . ' </label><br>' . '<input type="radio" id="correctAnsLive" name="answer" value="correctAnsLive,D">
+            <label for="correctAnsLive">' . "D. " . $_SESSION['correctAnsLive'] . ' </label><br>';
+            // Display the question layout (based on randomise function result)
+            switch ($mode) {
                 case 1:
                     echo $layout1;
                     break;
@@ -129,18 +176,19 @@
         ?>
         <?php
         if (isset($_POST['forward'])) {
-            $_SESSION['qnsAttempted'] += 1;
-            $_SESSION['userAns'] = trim($_POST['answer']);
-            $userAns = $_SESSION['userAns'];
+            // $_SESSION['qnsAttempted'] += 1;
+            $userAns = trim($_POST['answer']);
+            if ($userAns != null && $userAns != '') {
+                $_SESSION['answerHistory'][$_SESSION['historyIndex'] - 1] = $userAns;
+            }
+            // if (sizeof($_SESSION['answerHistory']) == $_SESSION['historyIndex'] - 1) { // if foregoing page's answer has not been recorded
+            //     array_push($_SESSION['answerHistory'], $userAns); // store userAns in the answerHistory array
+            // } else  {
             // Compare userAns with correctAnsLive as string (MCQ) or with correctAns variable (short-answer qn)
-            if ($userAns == 'correctAnsLive' || $userAns == $correctAns) {
-                echo "You are correct";
-                echo "<br>";
+            if ($userAns == $correctAns) {
                 $_SESSION['correct'] += 1;
                 array_push($_SESSION['correct_wrong_array'], "correct");
             } else {
-                echo "You are wrong";
-                echo "<br>";
                 $_SESSION['wrong'] += 1;
                 array_push($_SESSION['correct_wrong_array'], "wrong");
 
@@ -150,7 +198,15 @@
             }
         }
         if (isset($_POST['back'])) {
-            $_SESSION['qnsAttempted'] -= 1;
+            // $_SESSION['qnsAttempted'] -= 1;
+            $userAns = trim($_POST['answer']);
+            if ($userAns != null && $userAns != '') {
+                $_SESSION['answerHistory'][$_SESSION['historyIndex'] + 1] = $userAns;
+            }
+            // if (sizeof($_SESSION['answerHistory']) == $_SESSION['historyIndex'] + 1) { // if foregoing page's answer has not been recorded
+            //     array_push($_SESSION['answerHistory'], $userAns);
+            // } // at historyIndex + 1
+        
             // Substract the point based on result of previously attempted question
             if (end($_SESSION['correct_wrong_array']) == "correct") {
                 $_SESSION['correct'] -= 1;
@@ -161,28 +217,11 @@
             } else {
                 echo "Fail to reset score from previous attempt!";
             }
-            // Redirect to home page if pressing back from the first question page
-            if ($_SESSION['qnsAttempted'] < 0) {
-                header('Location: index.php');
-            }
-
-            // Display the previous question
-            $prevQnID = end($_SESSION['used_questionID']);
-            echo "Previous Question ID:" . $prevQnID;
-
-            $_SESSION['questionIDLive'] = $_SESSION['questionID'];
-            // array_push($_SESSION['used_questionID'], $_SESSION['questionIDLive']);
-            // 
-            $_SESSION['questionLive'] = $_SESSION['question'];
-            $_SESSION['correctAnsLive'] = $_SESSION['correctAns'];
-            $_SESSION['wrongAns1Live'] = $_SESSION['wrongAns1'];
-            $_SESSION['wrongAns2Live'] = $_SESSION['wrongAns2'];
-            $_SESSION['wrongAns3Live'] = $_SESSION['wrongAns3'];
         }
         // var_dump($_SESSION);
         echo "<br>";
-        print_r($_SESSION);
-
+        // print_r($_SESSION);
+        
         ?>
         <input type='submit' name='back' value='Previous Question' />
         <input type='submit' name='forward' value='Next Question' />
