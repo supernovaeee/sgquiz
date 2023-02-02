@@ -10,8 +10,8 @@
 
 <body>
     <?php
-    ini_set('display_errors', 1);
-    error_reporting(E_ALL ^ E_NOTICE);
+    // ini_set('display_errors', 1);
+    // error_reporting(E_ALL ^ E_NOTICE);
     session_start();
     // correctAns variable to store correctAnsLive in previous question
     $_SESSION['correctAns'] = $_SESSION['correctAnsLive'];
@@ -31,16 +31,29 @@
     if ($_SESSION['historyAttempt'] == 1) {
         $randKey = rand(0, 9);
         $randLineArray = explode(",", $questions[$randKey]);
+        if (in_array($randLineArray[0], $_SESSION['used_questionID'])) {
+            $randKey = rand(10, 19);
+            $randLineArray = explode(",", $questions[$randKey]);
+        }
         echo "<h2>This is History Game</h2>";
         echo ($randLineArray[2]);
     } else {
+        echo "<br>";
         $randKey = rand(10, 19);
+        // echo "Random key generated:" . $randKey . "<br>";
         $randLineArray = explode(",", $questions[$randKey]);
+        // If question is already used (exists in used_questionID), regenerate random question
+        if (in_array($randLineArray[0], $_SESSION['used_questionID'])) {
+            $randKey = rand(10, 19);
+            $randLineArray = explode(",", $questions[$randKey]);
+        }
         echo "<h2>This is Geography Game</h2>";
         echo ($randLineArray[2]);
     }
     // Set session variables to store the randomly generated values into global variables
-    $_SESSION['question_ID'] = $randLineArray[0];
+    $_SESSION['questionID'] = $randLineArray[0];
+    array_push($_SESSION['used_questionID'], $_SESSION['questionID']);
+    print_r($_SESSION['used_questionID']);
     $_SESSION['question'] = $randLineArray[2];
     $_SESSION['correctAnsLive'] = $randLineArray[3];
     $_SESSION['wrongAns1'] = $randLineArray[4];
@@ -129,6 +142,8 @@
             }
         }
         // var_dump($_SESSION);
+        // print_r($_SESSION);
+        
         ?>
         <!-- <input type='submit' name='back' value='Previous Question' /> -->
         <input type='submit' name='forward' value='Next Question' />

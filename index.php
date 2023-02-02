@@ -30,6 +30,7 @@
             $_SESSION['wrong'] = 0;
             $_SESSION['correct'] = 0;
             $_SESSION['qnsAttempted'] = 0;
+            $_SESSION['used_questionID'] = array();
             // set historyAttempt and geoAttempt variables based on option input
             // direct to game.php after submitting
             if ($_POST['option'] == 'his') {
