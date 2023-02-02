@@ -39,3 +39,6 @@ fdsa,1,0
 asdfsdf,1,0
 Azza Sekarnova,1,0
 erick,1,0
+Azza Sekarnova,1,0
+erick,1,0
+erick,0,1
