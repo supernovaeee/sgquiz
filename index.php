@@ -29,6 +29,7 @@
             $_SESSION['geoAttempt'] = 0;
             $_SESSION['wrong'] = 0;
             $_SESSION['correct'] = 0;
+            $_SESSION['correct_wrong_array'] = array();
             $_SESSION['qnsAttempted'] = 0;
             $_SESSION['used_questionID'] = array();
             // set historyAttempt and geoAttempt variables based on option input
