@@ -32,3 +32,10 @@ erick,1,0
 Azza Sekarnova,0,1
 Azza Sekarnova,1,0
 Azza Sekarnova,1,0
+marcel,0,1
+jeff,1,0
+Azza Sekarnova,1,0
+fdsa,1,0
+asdfsdf,1,0
+Azza Sekarnova,1,0
+erick,1,0
