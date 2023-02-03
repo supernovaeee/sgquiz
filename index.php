@@ -14,7 +14,6 @@
     // ini_set('display_errors', 1);
     // error_reporting(E_ALL ^ E_NOTICE);
     session_start();
-    session_unset();
     if (isset($_POST['submit'])) {
         $name = $_POST['name'];
         $trimName = trim($name);
@@ -24,12 +23,12 @@
             echo "<h4 style='color:red;'>$error</h4>";
         } else {
             // initialise session variables
-            $_SESSION['overallScore'] = 0;
+    
+            if (isset($_SESSION['name']) && $_SESSION['name'] != $trimName) // if the name is same, don't initialise a new overall score
+                $_SESSION['overallScore'] = 0;
+            if (!isset($_SESSION['overallScore'])) // if overall score is not set, initialise a new overall score
+                $_SESSION['overallScore'] = 0;
             $_SESSION['name'] = $trimName;
-            $_SESSION['wrong'] = 0;
-            $_SESSION['correct'] = 0;
-            $_SESSION['correct_wrong_array'] = array();
-            $_SESSION['qnsAttempted'] = 0;
             $_SESSION['questionsGlobal'] = array();
             $_SESSION['questionHistory'] = array();
             $_SESSION['answerHistory'] = array();
@@ -63,11 +62,6 @@
                 die("unable to open file!");
             }
             fclose($myfile);
-            if ($_POST['option'] == 'his') {
-                header('Location: game.php');
-            } else {
-                header('Location: game.php');
-            }
         }
     }
     ?>
@@ -103,7 +97,7 @@
                         <button type='reset' name='reset' value='Reset'>Reset</button>
                     </div>
                     <div class="submitResetItem submitContainer">
-                        <button type='submit' name='submit' value='Enter the Game!'>Play!</button>
+                        <button type='submit' name='submit' value='Play'>Play!</button>
                     </div>
 
                 </div>

@@ -15,8 +15,8 @@
         // ini_set('display_errors', 1);
         // error_reporting(E_ALL ^ E_NOTICE);
         session_start();
-        print_r($_SESSION['questionHistory']);
-
+        // print_r($_SESSION['questionHistory']);
+        
 
         // Store correct answer in previous question : correctAnsLive to correctAns 
         $_SESSION['correctAns'] = $_SESSION['correctAnsLive'];
@@ -211,8 +211,8 @@
             }
             // Debugging
             // Display answer history array
-            echo "<label>Answer History Array:</label>";
-            print_r($_SESSION['answerHistory']);
+            // echo "<label>Answer History Array:</label>";
+            // print_r($_SESSION['answerHistory']);
             // // var_dump($_SESSION);
             // echo "<br>";
             // print_r($_SESSION);

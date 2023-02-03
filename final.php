@@ -52,12 +52,33 @@
         return $correct * 5 - $wrong * 3;
     }
     $point = counter($correct, $wrong);
-    // $_SESSION['overallScore'] += $point;
+    $_SESSION['overallScore'] += $point;
     echo "Your Point: " . $point;
     echo '<br>';
-    // echo "Your Overall Score: " . $_SESSION['overallScore'];
-    
+    echo "Your Overall Score: " . $_SESSION['overallScore'];
     ?>
+    <?php
+    if (isset($_POST['restart'])) {
+        header('Location: game.php');
+    }
+    // if (isset($_POST['leaderboard'])) {
+    //     header('Location: leaderboard.php');
+    // }
+    // if (isset($_POST['exit'])) {
+    //     header('Location: index.php');
+    // }
+    ?>
+    <div class="buttonContainer game">
+        <form method="post" action="index.php">
+            <button type='submit' name='restart' value='Start A New Quiz'>Start A New Quiz</button>
+        </form>
+        <form method="post" action="leaderboard.php">
+            <button type='submit' name='leaderboard' value='View Leaderboard'>View Leaderboard</button>
+        </form>
+        <form method="post" action="index.php">
+            <button type='submit' name='exit' value='Exit the Game'>Exit the Game</button>
+        </form>
+    </div>
 </body>
 
 </html>
