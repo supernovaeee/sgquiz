@@ -53,6 +53,7 @@
     }
     $point = counter($correct, $wrong);
     $_SESSION['overallScore'] += $point;
+    // $_SESSION['userStatus'] = 'returning';
     echo "Your Point: " . $point;
     echo '<br>';
     echo "Your Overall Score: " . $_SESSION['overallScore'];
@@ -69,7 +70,9 @@
     // }
     ?>
     <div class="buttonContainer game">
-        <form method="post" action="index.php">
+        <!---<a href="test_get.php?subject=PHP&web=W3schools.com">Test $GET</a>--->
+        <form method="post" action="index.php?userStatus=returning">
+
             <button type='submit' name='restart' value='Start A New Quiz'>Start A New Quiz</button>
         </form>
         <form method="post" action="leaderboard.php">

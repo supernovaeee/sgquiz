@@ -14,21 +14,23 @@
     // ini_set('display_errors', 1);
     // error_reporting(E_ALL ^ E_NOTICE);
     session_start();
+    // session_unset();
     if (isset($_POST['submit'])) {
         $name = $_POST['name'];
         $trimName = trim($name);
-        if (empty($trimName)) {
+        if (empty($trimName) && !isset($_SESSION['name'])) {
             // display warning message if name is empty string
             $error = "Name cannot be blank";
             echo "<h4 style='color:red;'>$error</h4>";
         } else {
             // initialise session variables
-    
-            if (isset($_SESSION['name']) && $_SESSION['name'] != $trimName) // if the name is same, don't initialise a new overall score
+            if (isset($_SESSION['name']) && !empty($trimName) && $_SESSION['name'] != $trimName) { // if the name is same, don't initialise a new overall score
                 $_SESSION['overallScore'] = 0;
+            }
             if (!isset($_SESSION['overallScore'])) // if overall score is not set, initialise a new overall score
                 $_SESSION['overallScore'] = 0;
-            $_SESSION['name'] = $trimName;
+            if (!empty($trimName)) // if name exists (user has input their name, set session variable name to the existing name)
+                $_SESSION['name'] = $trimName;
             $_SESSION['questionsGlobal'] = array();
             $_SESSION['questionHistory'] = array();
             $_SESSION['answerHistory'] = array();
@@ -79,9 +81,15 @@
                     alt="alt">
             </div>
             <form action='index.php' method='POST'>
-                <div class="nameContainer">
+                <?php
+                if (isset($_GET['userStatus']) && $_GET['userStatus'] == 'returning') {
+                    echo '<h2>Haha welcome back ' . $_SESSION['name'] . '</h2>';
+                } else {
+                    echo '<div class="nameContainer">
                     <input class="name" type="text" name="name" placeholder="Your Name*" required>
-                </div>
+                    </div>';
+                }
+                ?>
                 <div class="radioContainer">
                     <div class="radioItem historyContainer">
                         <input type="radio" id="his" name="option" value="his" required>
