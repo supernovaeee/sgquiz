@@ -83,7 +83,7 @@
             <form action='index.php' method='POST'>
                 <?php
                 if (isset($_GET['userStatus']) && $_GET['userStatus'] == 'returning') {
-                    echo '<h2>Haha welcome back ' . $_SESSION['name'] . '</h2>';
+                    echo '<h2>Welcome back, ' . $_SESSION['name'] . '!</h2>';
                 } else {
                     echo '<div class="nameContainer">
                     <input class="name" type="text" name="name" placeholder="Your Name*" required>

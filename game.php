@@ -15,8 +15,6 @@
         // ini_set('display_errors', 1);
         // error_reporting(E_ALL ^ E_NOTICE);
         session_start();
-        // print_r($_SESSION['questionHistory']);
-        
 
         // Store correct answer in previous question : correctAnsLive to correctAns 
         $_SESSION['correctAns'] = $_SESSION['correctAnsLive'];
@@ -104,13 +102,7 @@
                 header('Location: final.php');
             }
         }
-        // // Debugging
-        // // Display question history array
-        // echo "<label>Question History Array:</label>";
-        // print_r($_SESSION['questionHistory']);
-        // // Display history index
-        // echo "<label>History Index: " . $_SESSION['historyIndex'] . "</label>";
-        
+
         // Display header
         if ($_SESSION['gameType'] == 'his') {
             echo "<div class='gameTitleContainer'> <h1>This is History Game</h1></div>"; // display header for history game
@@ -132,13 +124,18 @@
         }
         echo '<br>';
         echo '<br>';
-
+        // Display instruction based on game mode (MCQ or short answer)
+        if ($mode == 0) {
+            echo '<label>Please type in the correct answer</label><br>';
+        } else {
+            echo '<label>Please select the correct answer</label><br>';
+        }
         // Close questions file
         fclose($file);
         ?>
+
         <br><br>
 
-        <label>Please select the correct answer</label><br>
         <form method="post" action="game.php">
             <?php
             // Display whether the answer is MCQ or short text input (based on randomise function result)
@@ -184,7 +181,6 @@
             }
             $correctAnsLive = trim($_SESSION['correctAnsLive']);
             $correctAns = trim($_SESSION['correctAns']);
-            // echo $correctAnsLive;
             echo "<br>";
             ?>
             <?php
@@ -199,7 +195,6 @@
                 }
             }
             if (isset($_POST['back'])) {
-                // $_SESSION['qnsAttempted'] -= 1;
                 $userAns = trim($_POST['answer']);
                 $foregoing = $_SESSION['answerHistory'][$_SESSION['historyIndex'] + 1]; // STRICTLY FOR READING -> COMPARISON
                 if ($userAns != null && $userAns != '') {
@@ -209,14 +204,6 @@
 
                 }
             }
-            // Debugging
-            // Display answer history array
-            // echo "<label>Answer History Array:</label>";
-            // print_r($_SESSION['answerHistory']);
-            // // var_dump($_SESSION);
-            // echo "<br>";
-            // print_r($_SESSION);
-            
             ?>
             <div class="buttonContainer game">
                 <button type='submit' name='back' value='Previous Question'>Previous Question</button>

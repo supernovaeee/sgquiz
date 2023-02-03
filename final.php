@@ -13,8 +13,8 @@
     <h1>Your Result</h1>
     <?php
     session_start();
-    // print_r($_SESSION['answerHistory']);
-    function checker($x)
+    function checker($x) // a function to check whether user answer matches with the answer database 
+    
     {
         $LineArray = explode(",", $_SESSION['questionsGlobal'][$_SESSION['questionHistory'][$x]]);
         $correctStatement = explode(",", $_SESSION['answerHistory'][$x]);
@@ -32,7 +32,8 @@
             }
         }
     }
-    function countCorrect()
+    function countCorrect() // a function to iterate through the user answer history array and count the number of correct answers
+    
     {
         $counter = 0;
         for ($x = 0; $x <= sizeof($_SESSION['answerHistory']); $x++) {
@@ -43,34 +44,17 @@
 
     $correct = countCorrect();
     $wrong = 5 - countCorrect();
-    echo "Correct Answer: " . $correct;
-    echo '<br>';
-    echo "Wrong Answer: " . $wrong;
-    echo '<br>';
-    function counter($correct, $wrong)
+    echo "<div class='correctWrongContainer'>Correct Answer: " . $correct . '<br>' . "Wrong Answer: " . $wrong . '<br></div>';
+    function counter($correct, $wrong) // function to count score 
+    
     {
         return $correct * 5 - $wrong * 3;
     }
     $point = counter($correct, $wrong);
     $_SESSION['overallScore'] += $point;
-    // $_SESSION['userStatus'] = 'returning';
-    echo "Your Point: " . $point;
-    echo '<br>';
-    echo "Your Overall Score: " . $_SESSION['overallScore'];
-    ?>
-    <?php
-    if (isset($_POST['restart'])) {
-        header('Location: game.php');
-    }
-    // if (isset($_POST['leaderboard'])) {
-    //     header('Location: leaderboard.php');
-    // }
-    // if (isset($_POST['exit'])) {
-    //     header('Location: index.php');
-    // }
+    echo "<div class='correctWrongContainer'>Your Point: " . $point . '<br>' . "Your Overall Score: " . $_SESSION['overallScore'] . '<br></div>';
     ?>
     <div class="buttonContainer game">
-        <!---<a href="test_get.php?subject=PHP&web=W3schools.com">Test $GET</a>--->
         <form method="post" action="index.php?userStatus=returning">
 
             <button type='submit' name='restart' value='Start A New Quiz'>Start A New Quiz</button>
