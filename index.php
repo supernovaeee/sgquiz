@@ -14,7 +14,6 @@
     // ini_set('display_errors', 1);
     // error_reporting(E_ALL ^ E_NOTICE);
     session_start();
-    // session_unset();
     if (isset($_POST['submit'])) {
         $name = $_POST['name'];
         $trimName = trim($name);
@@ -67,8 +66,6 @@
         }
     }
     ?>
-
-
     <div class="titleContainer">
         <h1>Singapore General Knowledge Quiz</h1>
     </div>
