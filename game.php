@@ -18,7 +18,7 @@
         // print_r($_SESSION['randKeyArray']);
         
 
-        // variables to store session variables Live in previous question
+        // Store correct answer in previous question : correctAnsLive to correctAns 
         $_SESSION['correctAns'] = $_SESSION['correctAnsLive'];
         ?>
         <?php
@@ -31,27 +31,29 @@
             $questions[] = fgets($file);
         }
 
-        // Function to generate random key to later pick a question from text file
+        // Function to generate unique random key to later pick a question from text file
         function randomKey($gameType)
         {
             if ($gameType == 'his') {
                 $n = sizeof($_SESSION['randKeyArray']) - 10; //subtract number of geog questions
-                $randPointer = rand(0, $n - 1); // return any integer from 0-9 => question number 1-10
-                $randKey = $_SESSION['randKeyArray'][$randPointer];
-                array_splice($_SESSION['randKeyArray'], $randPointer, 1);
+                $randPointer = rand(0, $n - 1); // return any integer from 0-9 for pointer => question number 1-10
+                $randKey = $_SESSION['randKeyArray'][$randPointer]; // randKey is a number taken from randKeyArray by a randomised pointer (randPointer)
+                array_splice($_SESSION['randKeyArray'], $randPointer, 1); // remove taken randKey from randKeyArray => avoid duplicate questions
             } else {
                 $n = sizeof($_SESSION['randKeyArray']) - 10; //subtract number of his questions
                 $randPointer = rand(10, 9 + $n); // return any integer from 10-19 => question number 11-20
-                $randKey = $_SESSION['randKeyArray'][$randPointer];
-                array_splice($_SESSION['randKeyArray'], $randPointer, 1);
+                $randKey = $_SESSION['randKeyArray'][$randPointer]; // randKey is a number taken from randKeyArray by a randomised pointer (randPointer)
+                array_splice($_SESSION['randKeyArray'], $randPointer, 1); // remove taken randKey from randKeyArray => avoid duplicate questions
             }
             return $randKey; // question number = randKey + 1
         }
+        // Function to generate random key to determine whether the question will be in MCQ or text input mode
         function randomMode()
         {
             $rand = rand(0, 4);
             return $rand;
         }
+        // Function to parse question and change session variables according to the values taken
         function parseQuestion($questionKey)
         {
             global $questions;
@@ -65,20 +67,20 @@
             $_SESSION['wrongAns3Live'] = $randLineArray[6];
 
         }
+        // Forward and backwards navigation conditions
         if (isset($_POST['back'])) {
             $_SESSION['historyIndex']--;
             if ($_SESSION['historyIndex'] < 0) { // if user press backwards from the first question, go back to homepage and reset
                 header('Location: index.php');
-            } else { // if user press backwards from any question, will get the key from question history
+            } else { // if user press backwards from any question, will get the key from question history based on the current pointer
                 // get key for question and mode
                 $key = $_SESSION['questionHistory'][$_SESSION['historyIndex']];
                 $mode = $_SESSION['modeHistory'][$_SESSION['historyIndex']];
                 // parse and display
                 parseQuestion($key);
             }
-
         } else {
-            if (isset($_POST['forward'])) {
+            if (isset($_POST['forward'])) { // only increment if next question button has been pressed
                 $_SESSION['historyIndex']++;
             }
             if ($_SESSION['historyIndex'] == sizeof($_SESSION['questionHistory'])) { // if the pointer is beyond the current array (user will attempt a new question), will randomise
@@ -98,8 +100,17 @@
                 // parse and display
                 parseQuestion($key);
             }
+            if ($_SESSION['historyIndex'] >= 5) {
+                header('Location: final.php');
+            }
         }
-
+        // // Debugging
+        // // Display question history array
+        // echo "<label>Question History Array:</label>";
+        // print_r($_SESSION['questionHistory']);
+        // // Display history index
+        // echo "<label>History Index: " . $_SESSION['historyIndex'] . "</label>";
+        
         // Display header
         if ($_SESSION['gameType'] == 'his') {
             echo "<div class='gameTitleContainer'> <h1>This is History Game</h1></div>"; // display header for history game
@@ -109,11 +120,11 @@
 
         // Display question
         echo "<div class='questionContainer'>" . ($_SESSION['questionLive']) . "</div>";
-        // Display user's previous answer if he/she has already attempted.
+        // Display user's previous answer if the user has already attempted.
         if (sizeof($_SESSION['answerHistory']) > $_SESSION['historyIndex']) {
-            if ($mode == 0)
+            if ($mode == 0) // if the answer was in text input, display previous answer from answerHistory array
                 echo '<label><br>Your previous answer was : ' . $_SESSION['answerHistory'][$_SESSION['historyIndex']] . '</label>';
-            else {
+            else { // if the answer was in MCQ form, display previous answer as A/B/C/D : taken from answerHistory array as an arrray (rawRadioValue), take only the second element 
                 $rawRadioValue = $_SESSION['answerHistory'][$_SESSION['historyIndex']];
                 $multipleChoice = explode(',', $rawRadioValue);
                 echo '<label><br>Your previous answer was : ' . $multipleChoice[1] . '</label>';
@@ -173,55 +184,72 @@
             }
             $correctAnsLive = trim($_SESSION['correctAnsLive']);
             $correctAns = trim($_SESSION['correctAns']);
-            // echo $correctAnsLive;
+
+            // // New code need help !!!!!
+            // $rawRadioValue = $_SESSION['answerHistory'][$_SESSION['historyIndex']];
+            // echo "rawRadioValue: " . $rawRadioValue;
+            // $multipleChoice = explode(',', $rawRadioValue);
+            // print_r($multipleChoice);
+            // echo "<br>";
+            // echo $multipleChoice[0];
+            echo $correctAnsLive;
             echo "<br>";
             ?>
             <?php
             if (isset($_POST['forward'])) {
-                // $_SESSION['qnsAttempted'] += 1;
                 $userAns = trim($_POST['answer']);
+                $foregoing = $_SESSION['answerHistory'][$_SESSION['historyIndex'] - 1]; // STRICTLY FOR READING -> COMPARISON
                 if ($userAns != null && $userAns != '') {
-                    $_SESSION['answerHistory'][$_SESSION['historyIndex'] - 1] = $userAns;
+                    $_SESSION['answerHistory'][$_SESSION['historyIndex'] - 1] = $userAns; // DONT CHANGE TO VARIABLE. STORE TO GLOBAL.
+                } else if (!isset($foregoing) || $foregoing == '') {
+                    $_SESSION['answerHistory'][$_SESSION['historyIndex'] - 1] = "No Answer"; // DONT CHANGE TO VARIABLE. STORE TO GLOBAL.
+            
                 }
                 // if (sizeof($_SESSION['answerHistory']) == $_SESSION['historyIndex'] - 1) { // if foregoing page's answer has not been recorded
                 //     array_push($_SESSION['answerHistory'], $userAns); // store userAns in the answerHistory array
                 // } else  {
+            
                 // Compare userAns with correctAnsLive as string (MCQ) or with correctAns variable (short-answer qn)
-                if ($userAns == $correctAns) {
-                    $_SESSION['correct'] += 1;
-                    array_push($_SESSION['correct_wrong_array'], "correct");
-                } else {
-                    $_SESSION['wrong'] += 1;
-                    array_push($_SESSION['correct_wrong_array'], "wrong");
-
-                }
-                if ($_SESSION['qnsAttempted'] >= 5) {
-                    header('Location: final.php');
-                }
+                // if ($userAns == $correctAns || $userAns == $multipleChoice[0]) {
+                //     $_SESSION['correct'] += 1;
+                //     array_push($_SESSION['correct_wrong_array'], "correct");
+                // } else {
+                //     $_SESSION['wrong'] += 1;
+                //     array_push($_SESSION['correct_wrong_array'], "wrong");
+            
+                // }
             }
             if (isset($_POST['back'])) {
                 // $_SESSION['qnsAttempted'] -= 1;
                 $userAns = trim($_POST['answer']);
+                $foregoing = $_SESSION['answerHistory'][$_SESSION['historyIndex'] + 1]; // STRICTLY FOR READING -> COMPARISON
                 if ($userAns != null && $userAns != '') {
                     $_SESSION['answerHistory'][$_SESSION['historyIndex'] + 1] = $userAns;
+                } else if (!isset($foregoing) || $foregoing == '') {
+                    $_SESSION['answerHistory'][$_SESSION['historyIndex'] + 1] = "No Answer";
+
                 }
                 // if (sizeof($_SESSION['answerHistory']) == $_SESSION['historyIndex'] + 1) { // if foregoing page's answer has not been recorded
                 //     array_push($_SESSION['answerHistory'], $userAns);
                 // } // at historyIndex + 1
             
-                // Substract the point based on result of previously attempted question
-                if (end($_SESSION['correct_wrong_array']) == "correct") {
-                    $_SESSION['correct'] -= 1;
-                    array_pop($_SESSION['correct_wrong_array']);
-                } else if (end($_SESSION['correct_wrong_array']) == "wrong") {
-                    $_SESSION['wrong'] -= 1;
-                    array_pop($_SESSION['correct_wrong_array']);
-                } else {
-                    echo "Fail to reset score from previous attempt!";
-                }
+                // // Substract the point based on result of previously attempted question
+                // if (end($_SESSION['correct_wrong_array']) == "correct") {
+                //     $_SESSION['correct'] -= 1;
+                //     array_pop($_SESSION['correct_wrong_array']);
+                // } else if (end($_SESSION['correct_wrong_array']) == "wrong") {
+                //     $_SESSION['wrong'] -= 1;
+                //     array_pop($_SESSION['correct_wrong_array']);
+                // } else {
+                //     echo "Fail to reset score from previous attempt!";
+                // }
             }
-            // var_dump($_SESSION);
-            echo "<br>";
+            // Debugging
+            // Display answer history array
+            echo "<label>Answer History Array:</label>";
+            print_r($_SESSION['answerHistory']);
+            // // var_dump($_SESSION);
+            // echo "<br>";
             // print_r($_SESSION);
             
             ?>
