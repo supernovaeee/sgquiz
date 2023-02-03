@@ -15,8 +15,8 @@
         // ini_set('display_errors', 1);
         // error_reporting(E_ALL ^ E_NOTICE);
         session_start();
-        // print_r($_SESSION['randKeyArray']);
-        
+        print_r($_SESSION['questionHistory']);
+
 
         // Store correct answer in previous question : correctAnsLive to correctAns 
         $_SESSION['correctAns'] = $_SESSION['correctAnsLive'];
@@ -184,15 +184,7 @@
             }
             $correctAnsLive = trim($_SESSION['correctAnsLive']);
             $correctAns = trim($_SESSION['correctAns']);
-
-            // // New code need help !!!!!
-            // $rawRadioValue = $_SESSION['answerHistory'][$_SESSION['historyIndex']];
-            // echo "rawRadioValue: " . $rawRadioValue;
-            // $multipleChoice = explode(',', $rawRadioValue);
-            // print_r($multipleChoice);
-            // echo "<br>";
-            // echo $multipleChoice[0];
-            echo $correctAnsLive;
+            // echo $correctAnsLive;
             echo "<br>";
             ?>
             <?php
@@ -205,19 +197,6 @@
                     $_SESSION['answerHistory'][$_SESSION['historyIndex'] - 1] = "No Answer"; // DONT CHANGE TO VARIABLE. STORE TO GLOBAL.
             
                 }
-                // if (sizeof($_SESSION['answerHistory']) == $_SESSION['historyIndex'] - 1) { // if foregoing page's answer has not been recorded
-                //     array_push($_SESSION['answerHistory'], $userAns); // store userAns in the answerHistory array
-                // } else  {
-            
-                // Compare userAns with correctAnsLive as string (MCQ) or with correctAns variable (short-answer qn)
-                // if ($userAns == $correctAns || $userAns == $multipleChoice[0]) {
-                //     $_SESSION['correct'] += 1;
-                //     array_push($_SESSION['correct_wrong_array'], "correct");
-                // } else {
-                //     $_SESSION['wrong'] += 1;
-                //     array_push($_SESSION['correct_wrong_array'], "wrong");
-            
-                // }
             }
             if (isset($_POST['back'])) {
                 // $_SESSION['qnsAttempted'] -= 1;
@@ -229,20 +208,6 @@
                     $_SESSION['answerHistory'][$_SESSION['historyIndex'] + 1] = "No Answer";
 
                 }
-                // if (sizeof($_SESSION['answerHistory']) == $_SESSION['historyIndex'] + 1) { // if foregoing page's answer has not been recorded
-                //     array_push($_SESSION['answerHistory'], $userAns);
-                // } // at historyIndex + 1
-            
-                // // Substract the point based on result of previously attempted question
-                // if (end($_SESSION['correct_wrong_array']) == "correct") {
-                //     $_SESSION['correct'] -= 1;
-                //     array_pop($_SESSION['correct_wrong_array']);
-                // } else if (end($_SESSION['correct_wrong_array']) == "wrong") {
-                //     $_SESSION['wrong'] -= 1;
-                //     array_pop($_SESSION['correct_wrong_array']);
-                // } else {
-                //     echo "Fail to reset score from previous attempt!";
-                // }
             }
             // Debugging
             // Display answer history array

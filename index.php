@@ -30,6 +30,7 @@
             $_SESSION['correct'] = 0;
             $_SESSION['correct_wrong_array'] = array();
             $_SESSION['qnsAttempted'] = 0;
+            $_SESSION['questionsGlobal'] = array();
             $_SESSION['questionHistory'] = array();
             $_SESSION['answerHistory'] = array();
             $_SESSION['modeHistory'] = array();
