@@ -34,7 +34,7 @@
         // Function to generate random key to later pick a question from text file
         function randomKey($gameType)
         {
-            if ($gameType == 'history') {
+            if ($gameType == 'his') {
                 $n = sizeof($_SESSION['randKeyArray']) - 10; //subtract number of geog questions
                 $randPointer = rand(0, $n - 1); // return any integer from 0-9 => question number 1-10
                 $randKey = $_SESSION['randKeyArray'][$randPointer];
@@ -101,7 +101,7 @@
         }
 
         // Display header
-        if ($_SESSION['gameType'] == 'history') {
+        if ($_SESSION['gameType'] == 'his') {
             echo "<div class='gameTitleContainer'> <h1>This is History Game</h1></div>"; // display header for history game
         } else {
             echo "<div class='gameTitleContainer'> <h1>This is Geography Game</h1></div>"; // display header for geography game
@@ -173,7 +173,7 @@
             }
             $correctAnsLive = trim($_SESSION['correctAnsLive']);
             $correctAns = trim($_SESSION['correctAns']);
-            echo $correctAnsLive;
+            // echo $correctAnsLive;
             echo "<br>";
             ?>
             <?php
