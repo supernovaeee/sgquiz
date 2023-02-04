@@ -41,7 +41,6 @@
     <h1>Leaderboard</h1>
     <?php
     // arsort($leaderboard); // descending value
-    
     // asort($leaderboard); // ascending value
     // ksort($leaderboard); // ascending keys 
     // krsort($leaderboard); // descending keys
