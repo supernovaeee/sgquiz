@@ -184,6 +184,7 @@
             echo "<br>";
             ?>
             <?php
+            // Save user answer in the answer history or "No Answer" for blank input [to avoid synchronisation problem]
             if (isset($_POST['forward'])) {
                 $userAns = trim($_POST['answer']);
                 $foregoing = $_SESSION['answerHistory'][$_SESSION['historyIndex'] - 1]; // STRICTLY FOR READING -> COMPARISON

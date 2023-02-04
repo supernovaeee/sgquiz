@@ -17,12 +17,12 @@
     if (isset($_POST['submit'])) {
         $name = $_POST['name'];
         $trimName = trim($name);
+        // Display a warning message if name is empty string
         if (empty($trimName) && !isset($_SESSION['name'])) {
-            // display warning message if name is empty string
             $error = "Name cannot be blank";
             echo "<h4 style='color:red;'>$error</h4>";
         } else {
-            // initialise session variables
+            // Initialise session variables
             if (isset($_SESSION['name']) && !empty($trimName) && $_SESSION['name'] != $trimName) { // if the name is same, don't initialise a new overall score
                 $_SESSION['overallScore'] = 0;
             }
@@ -37,8 +37,8 @@
             $_SESSION['historyIndex'] = 0; // 0-based.
             $_SESSION['gameType'] = '';
             $_SESSION['randKeyArray'] = range(0, 19);
-            // set historyAttempt and geoAttempt variables based on option input
-            // direct to game.php after submitting
+            // Set historyAttempt and geoAttempt variables based on option input
+            // Direct to game.php after submitting
             if ($_POST['option'] == 'his') {
                 $_SESSION['gameType'] = 'his';
                 header('Location: game.php');
@@ -79,10 +79,11 @@
             </div>
             <form action='index.php' method='POST'>
                 <?php
+                // Display either a welcome back message (for returning user) or a text area input (new user) -- conditional HTML rendering 
                 if (isset($_GET['userStatus']) && $_GET['userStatus'] == 'returning') {
                     echo '<h2>Welcome back, ' . $_SESSION['name'] . '!</h2>';
                 } else {
-                    echo '<div class="nameContainer">
+                    echo '<div class="nameContainer"> 
                     <input class="name" type="text" name="name" placeholder="Your Name*" required>
                     </div>';
                 }

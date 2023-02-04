@@ -41,7 +41,7 @@
         }
         return $counter;
     }
-
+    // Display the number of correct and wrong answer
     $correct = countCorrect();
     $wrong = 5 - countCorrect();
     echo "<div class='correctWrongContainer'>Correct Answer: " . $correct . '<br>' . "Wrong Answer: " . $wrong . '<br></div>';
@@ -50,10 +50,47 @@
     {
         return $correct * 5 - $wrong * 3;
     }
+    // Display points collected for current attempt and overall score (all attempts of the same user)
     $point = counter($correct, $wrong);
     $_SESSION['overallScore'] += $point;
     echo "<div class='correctWrongContainer'>Your Point: " . $point . '<br>' . "Your Overall Score: " . $_SESSION['overallScore'] . '<br></div>';
     ?>
+
+    <?php
+    // NEW CODE: to write user overall scores in the database once they finish their attempt
+    // bcs we assume that user session name def exists as the last data in the user db -> 
+    // want to manipulate the last line of the user db -> array push 
+    
+    // 1. read the file into an array (line by line)
+    // 2. take the last line
+    // 3. modify the last line and add a new element (array push)
+    // 4. check for condition -> overall score exists: overwrite! . overall score does not exist : add
+    
+    // $name = $_SESSION['name'];
+    // $gameType = $_SESSION['gameType'];
+    // $txt = $name . "," . $gameType;
+    $myfile = "user.txt";
+    if (
+        // if file exists and is readable, 
+        file_exists($myfile) &&
+        ($handle = fopen($myfile, "r")) == TRUE
+    ) {
+        // .. open file
+        $content = file($myfile); //Read the file into an array. 
+        echo "Here's the array of user db: ";
+        print_r($content);
+        $lastUser = end($content); // Take the last line of the array
+        if (!isset($lastUser[2]) && $lastUser[2] == '') // if overallscore is not stored yet 
+        else{
+            // else, throw an error message
+            die("unable to open file!");
+        }
+
+    }
+    fclose($myfile);
+    ?>
+
+
     <div class="buttonContainer game">
         <form method="post" action="index.php?userStatus=returning">
 
