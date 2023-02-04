@@ -80,26 +80,24 @@
     // 2. take the last line
     // 3. modify the last line and add a new element (array push)
     // 4. check for condition -> overall score exists: overwrite! . overall score does not exist : add
-    $myfile = "user.txt";
+    $file = "user.txt";
     if (
         // if file exists and is readable, 
-        file_exists($myfile) &&
-        ($handle = fopen($myfile, "r")) == TRUE
+        file_exists($file)
     ) {
         // .. open file
-        $content = file($myfile, FILE_IGNORE_NEW_LINES); //Read the file into an array, skipping new lines
+        $content = file($file, FILE_IGNORE_NEW_LINES); //Read the file into an array, skipping new lines
         $lastUser = end($content); // Take the last line of the array (String)
         $lastUserExploded = explode(",", $lastUser);
         $lastUserExploded[2] = $_SESSION['overallScore'] . "\n";
         $content[sizeof($content) - 1] = implode(",", $lastUserExploded); // Put the last line array back into string and store in the last element of content array
         $allContent = implode("\n", $content); //Put the array back into one string
-        file_put_contents($myfile, $allContent); //Overwrite the file with the new content
+        file_put_contents($file, $allContent); //Overwrite the file with the new content
     
     } else {
         // else, throw an error message
         die("unable to open file!");
     }
-    fclose($myfile);
     ?>
 </body>
 
