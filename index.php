@@ -89,6 +89,7 @@
                 // Display either a welcome back message (for returning user) or a text area input (new user) -- conditional HTML rendering 
                 if (isset($_GET['userStatus']) && $_GET['userStatus'] == 'returning') {
                     echo '<h2>Welcome back, ' . $_SESSION['name'] . '!</h2>';
+                    echo '<h2>Your overall score is:' . $_SESSION['overallScore'] . '</h2>';
                 } else {
                     echo '<div class="nameContainer"> 
                     <input class="name" type="text" name="name" placeholder="Your Name*" required>

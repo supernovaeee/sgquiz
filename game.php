@@ -12,8 +12,6 @@
 <body>
     <div class="pageContainer game">
         <?php
-        // ini_set('display_errors', 1);
-        // error_reporting(E_ALL ^ E_NOTICE);
         session_start();
 
         // Store correct answer in previous question : correctAnsLive to correctAns 

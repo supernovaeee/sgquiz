@@ -1,10 +1,6 @@
-erick,his,-6
-erick,geo,3
-erick,his,-12
-Azza Sekarnova,his,-7
-Azza Sekarnova,his,-21
-Azza Sekarnova,geo,-3
-asdf,his,-30
-username,his,4
-erick,geo,-7
-erick,his,21
+Aqwert,his,25
+Aqwert,geo,10
+qwerty,his,-7
+Kevin,geo,-15
+Julia,his,17
+Julia,geo,92

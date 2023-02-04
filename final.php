@@ -53,7 +53,10 @@
     // Display points collected for current attempt and overall score (all attempts of the same user)
     $point = counter($correct, $wrong);
     $_SESSION['overallScore'] += $point;
-    echo "<div class='correctWrongContainer'>Your Point: " . $point . '<br>' . "Your Overall Score: " . $_SESSION['overallScore'] . '<br></div>';
+    echo "<div class='correctWrongContainer'>Your Point: " . $point . '<br>' . '<br></div>';
+
+    // Throw this first
+    // . "Your Overall Score: " . $_SESSION['overallScore']
     ?>
 
 

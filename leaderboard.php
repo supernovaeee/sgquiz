@@ -51,13 +51,33 @@
     } else {
         arsort($leaderboard); // descending value
     }
-    foreach ($leaderboard as $key => $val) {
-        $explodedLine = explode(",", $key);
-        echo $explodedLine[0] . " " . $explodedLine[1] . " " . $val;
-        echo "<br>";
-    }
-
     ?>
+
+    <html>
+    <table id="l_data" ; align=center ; style="width:70%" ; border="10" ; style="border-color: white">
+        <tr style="width:70px" ;>
+            <th style="color:white" ;>Name</th>
+            <th style="color:white" ;>Topic</th>
+            <th style="color:white" ;>Points</th>
+        </tr>
+        <?php foreach ($leaderboard as $key => $val) { ?>
+            <tr align=center ; style="width:70%" ; style="color:white" ;>
+                <?php $explodedLine = explode(",", $key); ?>
+                <td style="color:white" ;>
+                    <?php echo $explodedLine[0] ?>
+                </td>
+                <td style="color:white" ;>
+                    <?php echo $explodedLine[1] ?>
+                </td>
+                <td style="color:white" ;>
+                    <?php echo $val; ?>
+                </td>
+            </tr>
+        <?php } ?>
+    </table>
+
+    </html>
+
     <form method="post" action="leaderboard.php">
         <button type='submit' name='sortbyName' value='Sort by Name'>Sort by Name</button>
         <button type='submit' name='sortbyPoints' value='Sort by Points'>Sort by Points</button>
