@@ -56,44 +56,7 @@
     echo "<div class='correctWrongContainer'>Your Point: " . $point . '<br>' . "Your Overall Score: " . $_SESSION['overallScore'] . '<br></div>';
     ?>
 
-    <?php
-    // NEW CODE: to write user overall scores in the database once they finish their attempt
-    // bcs we assume that user session name def exists as the last data in the user db -> 
-    // want to manipulate the last line of the user db -> array push 
-    
-    // 1. read the file into an array (line by line)
-    // 2. take the last line
-    // 3. modify the last line and add a new element (array push)
-    // 4. check for condition -> overall score exists: overwrite! . overall score does not exist : add
-    
-    // $name = $_SESSION['name'];
-    // $gameType = $_SESSION['gameType'];
-    // $txt = $name . "," . $gameType;
-    $myfile = "user.txt";
-    if (
-        // if file exists and is readable, 
-        file_exists($myfile) &&
-        ($handle = fopen($myfile, "r")) == TRUE
-    ) {
-        // .. open file
-        $content = file($myfile); //Read the file into an array. 
-        echo "Here's the array of user db: ";
-        print_r($content);
-        $lastUser = end($content); // Take the last line of the array
-        if (!isset($lastUser[2]) && $lastUser[2] == '') { // if overallscore is not stored yet
-            array_push($_SESSION['overallScore'], end($content));
-        } else {
-            end($content)[2] = $_SESSION['overallScore'];
-        }
-        $allContent = implode("", $content); //Put the array back into one string
-        file_put_contents($myfile, $allContent); //Overwrite the file with the new content
-    
-    } else {
-        // else, throw an error message
-        die("unable to open file!");
-    }
-    fclose($myfile);
-    ?>
+
 
 
     <div class="buttonContainer game">
@@ -108,6 +71,36 @@
             <button type='submit' name='exit' value='Exit the Game'>Exit the Game</button>
         </form>
     </div>
+    <?php
+    // NEW CODE: to write user overall scores in the database once they finish their attempt
+    // bcs we assume that user session name def exists as the last data in the user db -> 
+    // want to manipulate the last line of the user db -> array push 
+    
+    // 1. read the file into an array (line by line)
+    // 2. take the last line
+    // 3. modify the last line and add a new element (array push)
+    // 4. check for condition -> overall score exists: overwrite! . overall score does not exist : add
+    $myfile = "user.txt";
+    if (
+        // if file exists and is readable, 
+        file_exists($myfile) &&
+        ($handle = fopen($myfile, "r")) == TRUE
+    ) {
+        // .. open file
+        $content = file($myfile, FILE_IGNORE_NEW_LINES); //Read the file into an array, skipping new lines
+        $lastUser = end($content); // Take the last line of the array (String)
+        $lastUserExploded = explode(",", $lastUser);
+        $lastUserExploded[2] = $_SESSION['overallScore'] . "\n";
+        $content[sizeof($content) - 1] = implode(",", $lastUserExploded); // Put the last line array back into string and store in the last element of content array
+        $allContent = implode("\n", $content); //Put the array back into one string
+        file_put_contents($myfile, $allContent); //Overwrite the file with the new content
+    
+    } else {
+        // else, throw an error message
+        die("unable to open file!");
+    }
+    fclose($myfile);
+    ?>
 </body>
 
 </html>

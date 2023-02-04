@@ -22,9 +22,14 @@
             $error = "Name cannot be blank";
             echo "<h4 style='color:red;'>$error</h4>";
         } else {
+            // Check if it is a unique game (different from previous attempt of the same user)
+            if (isset($_SESSION['gameType']) && $_POST['option'] != $_SESSION['gameType']) {
+                $uniqueGame = 1;
+            }
             // Initialise session variables
-            if (isset($_SESSION['name']) && !empty($trimName) && $_SESSION['name'] != $trimName) { // if the name is same, don't initialise a new overall score
+            if (isset($_SESSION['name']) && !empty($trimName) && $_SESSION['name'] != $trimName) { // if its a new name, intialise a new overall score
                 $_SESSION['overallScore'] = 0;
+                $uniqueUser = 1;
             }
             if (!isset($_SESSION['overallScore'])) // if overall score is not set, initialise a new overall score
                 $_SESSION['overallScore'] = 0;
@@ -57,7 +62,9 @@
                 // .. open file
                 // write the name into the text file, line by line
                 $myfile = fopen("user.txt", "a");
-                fwrite($myfile, $txt . PHP_EOL);
+                if ($uniqueUser == 1 || $uniqueGame == 1) { // if it's a unique user, write !
+                    fwrite($myfile, $txt . PHP_EOL);
+                }
             } else {
                 // else, throw an error message
                 die("unable to open file!");

@@ -1,6 +1,4 @@
-wid,geo
-wid,his
-asdf,geo
-erick,his
-Azza Sekarnova,his
-Kevin,his
+erick,his,-6
+erick,geo,3
+erick,his,-12
+Azza Sekarnova,his,-15
