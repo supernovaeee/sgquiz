@@ -13,7 +13,6 @@
     <div class="pageContainer game">
         <?php
         session_start();
-
         // Store correct answer in previous question : correctAnsLive to correctAns 
         $_SESSION['correctAns'] = $_SESSION['correctAnsLive'];
         ?>
@@ -131,9 +130,7 @@
         // Close questions file
         fclose($file);
         ?>
-
         <br><br>
-
         <form method="post" action="game.php">
             <?php
             // Display whether the answer is MCQ or short text input (based on randomise function result)

@@ -54,13 +54,7 @@
     $point = counter($correct, $wrong);
     $_SESSION['overallScore'] += $point;
     echo "<div class='correctWrongContainer'>Your Point: " . $point . '<br>' . '<br></div>';
-
-    // Throw this first
-    // . "Your Overall Score: " . $_SESSION['overallScore']
     ?>
-
-
-
 
     <div class="buttonContainer game">
         <form method="post" action="index.php?userStatus=returning">
