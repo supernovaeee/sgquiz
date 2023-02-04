@@ -1,6 +1,3 @@
-Aqwert,his,25
-Aqwert,geo,10
-qwerty,his,-7
 Kevin,geo,-15
-Julia,his,17
-Julia,geo,92
+Azza Sekarnova,his,17
+asdf,geo,-15

@@ -71,18 +71,11 @@
             <button type='submit' name='leaderboard' value='View Leaderboard'>View Leaderboard</button>
         </form>
         <form method="post" action="index.php">
-            <button type='submit' name='exit' value='Exit the Game'>Exit the Game</button>
+            <button type='submit' onclick="showAlertAndRedirect()" name='exit' value='Exit the Game'>Exit the
+                Game</button>
         </form>
     </div>
     <?php
-    // NEW CODE: to write user overall scores in the database once they finish their attempt
-    // bcs we assume that user session name def exists as the last data in the user db -> 
-    // want to manipulate the last line of the user db -> array push 
-    
-    // 1. read the file into an array (line by line)
-    // 2. take the last line
-    // 3. modify the last line and add a new element (array push)
-    // 4. check for condition -> overall score exists: overwrite! . overall score does not exist : add
     $file = "user.txt";
     if (
         // if file exists and is readable, 

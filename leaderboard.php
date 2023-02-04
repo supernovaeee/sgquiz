@@ -12,6 +12,8 @@
 
 <body>
     <?php
+    session_start();
+
     $file = "user.txt";
     if (
         // if file exists and is readable, 
@@ -22,7 +24,7 @@
         // Store only unique user data in leaderboard Array
         foreach ($content as $key => $val) {
             $explodedLine = explode(",", $val);
-            $uniqueId = $explodedLine[0] . "," . $explodedLine[1]; // same person same game type
+            $uniqueId = $explodedLine[0]; // same person 
             if (!isset($leaderboard[$uniqueId])) { // initialize if entry not made
                 $leaderboard[$uniqueId] = 0;
             }
@@ -40,24 +42,32 @@
     ?>
     <h1>Leaderboard</h1>
     <?php
-    // arsort($leaderboard); // descending value
-    // asort($leaderboard); // ascending value
-    // ksort($leaderboard); // ascending keys 
-    // krsort($leaderboard); // descending keys
+    echo $_SESSION['name'];
     // Display leaderboard array
     
     if (isset($_POST['sortbyName'])) {
-        ksort($leaderboard);
+        ksort($leaderboard); // sort name in alphabetical order
     } else {
-        arsort($leaderboard); // descending value
+        arsort($leaderboard); // sort values from high to low (descending)
     }
     ?>
+    <script> // JS Function to show pop-up message when user exits the game: containing user's name and overall score
+        function showAlertAndRedirect() {
+            var name = "<?php echo $_SESSION['name']; ?>";
+            var overallScore = "<?php echo $_SESSION['overallScore']; ?>";
+            // Show an alert message
+            alert("Are you sure you want to restart, " + name + "\nYour overall score is: " + overallScore);
+
+            // Redirect the user to the desired page
+            window.location.href = "index.php";
+        }
+    </script>
+
 
     <html>
     <table id="l_data" ; align=center ; style="width:70%" ; border="10" ; style="border-color: white">
         <tr style="width:70px" ;>
             <th style="color:white" ;>Name</th>
-            <th style="color:white" ;>Topic</th>
             <th style="color:white" ;>Points</th>
         </tr>
         <?php foreach ($leaderboard as $key => $val) { ?>
@@ -65,9 +75,6 @@
                 <?php $explodedLine = explode(",", $key); ?>
                 <td style="color:white" ;>
                     <?php echo $explodedLine[0] ?>
-                </td>
-                <td style="color:white" ;>
-                    <?php echo $explodedLine[1] ?>
                 </td>
                 <td style="color:white" ;>
                     <?php echo $val; ?>
@@ -87,9 +94,9 @@
 
             <button type='submit' name='restart' value='Start A New Quiz'>Start A New Quiz</button>
         </form>
-        <form method="post" action="index.php">
-            <button type='submit' name='exit' value='Exit the Game'>Exit the Game</button>
-        </form>
+        <button type='submit' onclick="showAlertAndRedirect()" name='exit' value='Exit the Game'>Exit the
+            Game
+        </button>
     </div>
 </body>
 

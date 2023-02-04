@@ -1,5 +1,6 @@
 A Singapore history and geography web quiz.
 Made as an assignment for ISIT307 University of Wollongong.
+Tech stack: HTML5, CSS, JavaScript, PHP
 
 Features:
 
@@ -12,4 +13,17 @@ Features:
 - After viewing Result, user can choose between 3 buttons: Start A New Quiz, View Leaderboard, and Exit the Game
 - If user choose Start A New Quiz, user will be redirected to home page but with their name and overall score already stored and displayed. They only need to choose the game topic and enter the game. The overall score will be a sum of the points collected in all attempts.
 - If the user choose View Leaderboard, a leaderboard consisting of all users' name and overall scores will be displayed. The overall score will be split according to question topic (History and Geography scores will not be combined). The user can then to Sort by Name (A-Z) or Sort by Points (higher to lower).
-- If the user choose Exit the Game,
+- If the user choose Exit the Game, an alert message will pop up containing user's name and overall scores, before exiting the game and redirecting to landing page.
+
+Pages:
+Index (index.php)
+Game (game.php)
+Result (final.php)
+Leaderboard (leaderboard.php)
+
+Additional:
+styles.css
+
+Text files as database:
+user.txt - storing users' name, game type, and points collected in each attempt
+questions.txt - storing questions, answers, and MCQ other answers
