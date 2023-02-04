@@ -11,8 +11,6 @@
 
 <body>
     <?php
-    // ini_set('display_errors', 1);
-    // error_reporting(E_ALL ^ E_NOTICE);
     session_start();
     if (isset($_POST['submit'])) {
         $name = $_POST['name'];
@@ -41,7 +39,7 @@
             $_SESSION['modeHistory'] = array();
             $_SESSION['historyIndex'] = 0; // 0-based.
             $_SESSION['gameType'] = '';
-            $_SESSION['randKeyArray'] = range(0, 19);
+            $_SESSION['randKeyArray'] = range(0, 19); // 20 questions: 10 history, 10 geography
             // Set historyAttempt and geoAttempt variables based on option input
             // Direct to game.php after submitting
             if ($_POST['option'] == 'his') {
@@ -81,8 +79,8 @@
             <div class="head">
                 <h1 class="title"> Enter your name to start — Pick the category — Click "Play"!</h1><br>
                 <img class="logo"
-                    src="https://cdn3.iconfinder.com/data/icons/world-landmark-vol-2/512/03-merlion-statue-landmark-singapore-512.png"
-                    alt="alt">
+                    src="https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fclipground.com%2Fimages%2Fmerlion-clipart-19.jpg&f=1&nofb=1&ipt=358ddcf59744dde1cfd38fab17b374b0239c171ec6b6f2b7d2f1e44be208aeab&ipo=images"
+                    alt="Merlion">
             </div>
             <form action='index.php' method='POST'>
                 <?php
