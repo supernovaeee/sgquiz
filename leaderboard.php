@@ -29,18 +29,7 @@
             $leaderboard[$uniqueId] += $explodedLine[2]; // add latest scores
         }
 
-        // asort($leaderboard); // ascending value
-        arsort($leaderboard); // descending value
-        // ksort($leaderboard); // ascending keys 
-        // krsort($leaderboard); // descending keys
-    
 
-        // Display leaderboard array
-        foreach ($leaderboard as $key => $val) {
-            $explodedLine = explode(",", $key);
-            echo $explodedLine[0] . " " . $explodedLine[1] . " " . $val;
-            echo "<br>";
-        }
 
 
     } else {
@@ -49,6 +38,40 @@
     }
 
     ?>
+    <h1>Leaderboard</h1>
+    <?php
+    // arsort($leaderboard); // descending value
+    
+    // asort($leaderboard); // ascending value
+    // ksort($leaderboard); // ascending keys 
+    // krsort($leaderboard); // descending keys
+    // Display leaderboard array
+    
+    if (isset($_POST['sortbyName'])) {
+        ksort($leaderboard);
+    } else {
+        arsort($leaderboard); // descending value
+    }
+    foreach ($leaderboard as $key => $val) {
+        $explodedLine = explode(",", $key);
+        echo $explodedLine[0] . " " . $explodedLine[1] . " " . $val;
+        echo "<br>";
+    }
+
+    ?>
+    <form method="post" action="leaderboard.php">
+        <button type='submit' name='sortbyName' value='Sort by Name'>Sort by Name</button>
+        <button type='submit' name='sortbyPoints' value='Sort by Points'>Sort by Points</button>
+    </form>
+    <div class="buttonContainer game">
+        <form method="post" action="index.php?userStatus=returning">
+
+            <button type='submit' name='restart' value='Start A New Quiz'>Start A New Quiz</button>
+        </form>
+        <form method="post" action="index.php">
+            <button type='submit' name='exit' value='Exit the Game'>Exit the Game</button>
+        </form>
+    </div>
 </body>
 
 </html>
