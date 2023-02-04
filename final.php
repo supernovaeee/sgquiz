@@ -80,12 +80,17 @@
         echo "Here's the array of user db: ";
         print_r($content);
         $lastUser = end($content); // Take the last line of the array
-        if (!isset($lastUser[2]) && $lastUser[2] == '') // if overallscore is not stored yet 
-        else{
-            // else, throw an error message
-            die("unable to open file!");
+        if (!isset($lastUser[2]) && $lastUser[2] == '') { // if overallscore is not stored yet
+            array_push($_SESSION['overallScore'], end($content));
+        } else {
+            end($content)[2] = $_SESSION['overallScore'];
         }
-
+        $allContent = implode("", $content); //Put the array back into one string
+        file_put_contents($myfile, $allContent); //Overwrite the file with the new content
+    
+    } else {
+        // else, throw an error message
+        die("unable to open file!");
     }
     fclose($myfile);
     ?>
